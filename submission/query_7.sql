@@ -1,0 +1,1 @@
+SELECT * FROM players_state_tracking
