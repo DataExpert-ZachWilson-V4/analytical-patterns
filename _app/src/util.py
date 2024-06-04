@@ -84,19 +84,3 @@ def get_changed_files():
     if not os.path.exists(file):
       raise ValueError(f"`{file}` not found. Please make sure all files exist.")
   return changed_files_list
-
-## Get the student's answers from the `submission` folder
-def get_submissions(submission_dir: str) -> dict:
-  submissions = {}
-  submission_files = [f for f in os.listdir(submission_dir)]
-  for filename in submission_files:
-    file_path = os.path.join(submission_dir, filename)
-    with open(file_path, "r") as file:
-      file_content = file.read()
-    if re.search(r'\S', file_content):
-      submissions[filename] = file_content
-  if not submissions:
-    logging.warning('no submissions found')
-    return None
-  sorted_submissions = dict(sorted(submissions.items()))
-  return sorted_submissions
