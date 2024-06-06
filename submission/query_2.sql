@@ -40,4 +40,4 @@ GROUP BY
         (player_name, team_abbreviation),  -- Group by player and team
         (player_name, season),  -- Group by player and season
         (team_abbreviation)  -- Group by team
-    );
+    )
