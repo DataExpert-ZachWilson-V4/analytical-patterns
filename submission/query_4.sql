@@ -8,7 +8,7 @@ WITH
             points,
             DENSE_RANK() OVER(ORDER BY points DESC) AS n_r
         FROM
-            sundep.grouping_sets
+            sundeep.grouping_sets
         WHERE
             player_name IS NOT NULL
         AND
