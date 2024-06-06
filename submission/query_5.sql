@@ -7,7 +7,7 @@ WITH
             total_games_won,
             DENSE_RANK() OVER(ORDER BY total_games_won DESC) AS n_r
         FROM
-            combined
+            sundeep.grouping_sets
         WHERE
             team <> 'N/A'
 )

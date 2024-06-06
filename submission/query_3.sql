@@ -8,7 +8,7 @@ WITH
             points,
             DENSE_RANK() OVER(ORDER BY points DESC) AS n_r
         FROM
-            combined
+            sundeep.grouping_sets
         WHERE
             team <> 'N/A'
         AND
