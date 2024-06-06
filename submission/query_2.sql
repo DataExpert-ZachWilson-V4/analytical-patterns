@@ -33,3 +33,7 @@ WITH
        (team_city)
      )
 )
+SELECT
+    *
+FROM
+    combined
