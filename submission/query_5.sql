@@ -1,4 +1,4 @@
-SELECT *
+SELECT team, won_games
 FROM jsgomez14.grouping_sets_hw5
 WHERE aggregation_level = 'team'
 ORDER BY won_games DESC
