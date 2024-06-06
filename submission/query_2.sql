@@ -1,5 +1,10 @@
 CREATE OR REPLACE TABLE jsgomez14.grouping_sets_hw5 AS
 SELECT
+    CASE 
+        WHEN GROUPING(GD.player_name, GD.team_abbreviation) = 0 THEN 'player_team'
+        WHEN GROUPING(GD.player_name, G.season) = 0 THEN 'player_season'
+        WHEN GROUPING(GD.team_abbreviation) = 0 THEN 'team'
+    END as aggregation_level,
     COALESCE(GD.player_name, 'Overall') AS player, -- Nulls means overall.
     COALESCE(GD.team_abbreviation, 'Overall') AS team, -- Because of group sets leaving nulls.
     COALESCE(CAST(G.season AS VARCHAR), 'Overall') AS season,
