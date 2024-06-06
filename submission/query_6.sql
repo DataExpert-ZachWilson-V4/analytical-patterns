@@ -12,8 +12,8 @@ JOIN bootcamp.nba_games AS G ON G.game_id = GD.game_id
 ),
 streak AS (
   SELECT *,
-        SUM(game_won) OVER (PARTITION BY team_abbreviation ORDER BY game_date ASC ROWS BETWEEN 90 PRECEDING AND CURRENT ROW) AS ninety_days_streak
-        -- Rolling sum of the won games in the last 90 games
+        SUM(game_won) OVER (PARTITION BY team_abbreviation ORDER BY game_date ASC ROWS BETWEEN 89 PRECEDING AND CURRENT ROW) AS ninety_days_streak
+        -- Rolling sum of the won games in the last 90 games. 89 preceding + 1 current = 90 games.
   FROM nba_games_data
 )
 SELECT 
