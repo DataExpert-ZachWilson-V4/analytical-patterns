@@ -7,6 +7,7 @@
 -- these dimensions; this table
 -- will be used to answer the next
 -- three queries
+CREATE OR REPLACE TABLE sundeep.grouping_sets AS
 WITH
   combined AS (
     SELECT 
@@ -32,11 +33,3 @@ WITH
        (team_city)
      )
 )
-SELECT
-    *
-FROM
-    combined
-WHERE   
-    team <> 'N/A'
-AND
-    points IS NOT NULL
