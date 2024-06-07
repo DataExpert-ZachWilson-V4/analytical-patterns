@@ -1,24 +1,5 @@
 
 
--- creating output table
-
-CREATE OR REPLACE TABLE nancycast01.nba_players_growth_accounting (
-player_name VARCHAR,
-first_active_season INTEGER,
-last_active_season INTEGER,
-seasons_active ARRAY(INTEGER),
-seasons_active_state VARCHAR,
-season INTEGER
-)
-
-WITH (
-format = 'PARQUET',
-partitioning = ARRAY['season']
-
-)
-
--- inserting data into the table commented out since tests didnt like it 
-
 WITH last_season AS (
 
 SELECT * FROM nancycast01.nba_players_growth_accounting
