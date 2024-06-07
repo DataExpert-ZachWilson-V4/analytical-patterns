@@ -5,7 +5,7 @@ SELECT
     COUNT(game_id) AS total_games_played,  
     SUM(pts) AS total_points,  
     SUM(
-        CASE WHEN team_id = home_team_id AND home_team_wins = 1 OR team_id = visitor_team_id AND home_team_wins = 0
+        CASE WHEN (team_id = home_team_id AND home_team_wins = 1) OR (team_id = visitor_team_id AND home_team_wins = 0)
         THEN 1 ELSE 0 END
      ) AS total_wins 
 FROM 
