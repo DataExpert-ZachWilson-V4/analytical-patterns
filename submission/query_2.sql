@@ -21,6 +21,11 @@ deduplicated_nba_games AS (
         bootcamp.nba_games
 )
 SELECT 
+    CASE 
+        WHEN GROUPING(dgd.player_name, dgd.team_abbreviation) = 0 THEN 'player_name__team_name'
+        WHEN GROUPING(dgd.player_name, dng.season) = 0 THEN 'player_name__season'
+        WHEN GROUPING(dgd.team_abbreviation) = 0 THEN 'team_name'
+    END as aggregation_level,
     COALESCE(dgd.player_name, 'overall') AS player,  -- Handle null player names when grouping by team
     COALESCE(dgd.team_abbreviation, 'overall') AS team,  -- Handle null team abbreviations when grouping by player and season
     COALESCE(CAST(dng.season AS VARCHAR), 'overall') AS season,  -- Handle null seasons when grouping by player and team
