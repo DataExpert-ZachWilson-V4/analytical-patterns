@@ -17,9 +17,9 @@ partitioning = ARRAY['season']
 
 )
 
--- inserting data into the table
+-- inserting data into the table commented out since tests didnt like it 
 
-INSERT INTO nancycast01.nba_players_growth_accounting
+-- INSERT INTO nancycast01.nba_players_growth_accounting
 
 WITH last_season AS (
 
