@@ -1,6 +1,6 @@
 -- query that does state change tracking for nba_players
 CREATE
-OR REPLACE TABLE mariavyso.nba_players_state_tracking
+OR REPLACE TABLE mariavyso.nba_players_state_tracking  AS
 -- subquery to select all records from the last season (1999)
 WITH
     last_year AS (
