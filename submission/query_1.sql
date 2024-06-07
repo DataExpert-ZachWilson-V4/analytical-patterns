@@ -69,8 +69,7 @@ SELECT
         WHEN season - last_active_year = 1
         AND is_active THEN 'Continued Playing'
         WHEN season - last_active_year > 1
-        AND is_active
-        AND THEN 'Returned from Retirement'
+        AND is_active THEN 'Returned from Retirement'
         ELSE 'Stayed Retired'
     END AS yearly_active_state,
     season
