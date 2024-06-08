@@ -4,6 +4,7 @@ WITH
             gd.player_name,
             gd.team_abbreviation,
             g.season,
+            -- Did not exaust all possible fields, this is just for illustration
             CAST(gd.fgm AS DOUBLE) AS fgm,
             CAST(gd.fga AS DOUBLE) AS fga,
             CAST(gd.fg3m AS DOUBLE) AS fg3m,
@@ -29,6 +30,7 @@ SELECT
     COALESCE(team_abbreviation, '(overall)') as team_abbreviation,
     COALESCE(CAST(season AS VARCHAR), '(overall)') as season,
     COUNT(1) as number_of_games,
+    -- I chose to sum the fields, but any other aggregation could have been used
     SUM(fgm) AS total_fgm,
     SUM(fga) AS total_fga,
     SUM(fg3m) AS total_fg3m,

@@ -68,6 +68,9 @@ WITH
         FROM
             grouped
         WHERE
+            -- This removes the overall from teams and player_name
+            -- and looks only for the total points from a player in a team through
+            -- all seasons
             season = '(Overall)'
             AND team_abbreviation <> '(Overall)'
             AND player_name <> '(Overall)'
