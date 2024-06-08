@@ -35,4 +35,4 @@ SELECT team_abbreviation,
 	rolling_90_day_wins
 FROM cumulated_results
 ORDER BY rolling_90_day_wins DESC
-LIMIT 1
+LIMIT 1 

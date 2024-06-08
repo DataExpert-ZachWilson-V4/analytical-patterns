@@ -45,4 +45,4 @@ SELECT COALESCE(ls.player_name, ts.player_name) AS player_name,
       ELSE 'ERROR'
     END AS state
 FROM last_season ls
-  FULL OUTER JOIN this_season ts ON ls.player_name = ts.player_name
+  FULL OUTER JOIN this_season ts ON ls.player_name = ts.player_name 

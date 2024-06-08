@@ -104,4 +104,4 @@ WHERE season != '(overall)'
 GROUP BY player_name,
 	season
 ORDER BY SUM(pts) DESC
-LIMIT 1
+LIMIT 1 

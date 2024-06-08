@@ -32,4 +32,4 @@ FROM streaks
 WHERE scored_over_ten_pts = 1		--Capture streaks where LeBron scored over ten points, not where he scored ten points or less
 GROUP BY streak_identifier
 ORDER BY COUNT(1) DESC
-LIMIT 1
+LIMIT 1 
