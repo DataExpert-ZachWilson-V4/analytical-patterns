@@ -3,10 +3,9 @@
 
 WITH ranked_team_scores AS (
     SELECT team_abbreviation,
-        DENSE_RANK() OVER (ORDER BY total_field_goals_made DESC) as rnk
+        DENSE_RANK() OVER (ORDER BY total_points DESC) as rnk
     FROM ovoxo.nba_game_details_grouped
-    WHERE team_abbreviation != '(all_teams)'
-      AND player_name = '(all_players)'
+    WHERE agg_type = 'team_aggregate'
 )
 
 SELECT team_abbreviation

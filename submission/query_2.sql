@@ -1,3 +1,6 @@
+-- Join nba_game_details with nba_games to get all fields in one table
+-- Cast data types as needed
+
 WITH combined AS (
     SELECT
     CAST(g.game_id AS BIGINT) AS game_id,
@@ -5,9 +8,6 @@ WITH combined AS (
     gd.player_id,
     gd.team_abbreviation AS team_abbreviation,
     gd.player_name AS player_name,
-    gd.start_position AS start_position,
-    gd.comment LIKE '%DND%' AS did_not_dress,
-    gd.comment LIKE '%NWT%' AS not_with_team,
     CASE
         WHEN CARDINALITY(SPLIT(MIN, ':')) > 1 
         THEN CAST(
@@ -41,25 +41,31 @@ WITH combined AS (
     JOIN bootcamp.nba_game_details gd ON g.game_id = gd.game_id
 )
 
+-- Aggregate data, Group by combinations of  player, team, and season
 SELECT COALESCE(player_name, '(all_players)') as player_name,
-  COALESCE(team_abbreviation, '(all_teams)') as team_abbreviation,
-  season,
-  SUM(m_field_goals_made) AS total_field_goals_made,
-  SUM(m_field_goals_attempted) AS total_field_goals_attempted,
-  SUM(m_3_pointers_made) AS total_3_pointers_made,
-  SUM(m_3_pointers_attempted) AS total_3_pointers_attempted,
-  SUM(m_free_throws_made) AS total_free_throws_made,
-  SUM(m_free_throws_attempted) AS total_free_throws_attempted,
-  SUM(m_offensive_rebounds) AS total_offensive_rebounds,
-  SUM(m_defensive_rebounds) AS total_defensive_rebounds,
-  SUM(m_rebounds) AS total_rebounds,
-  SUM(m_assists) AS total_assists,
-  SUM(m_steals) AS total_steals,
-  SUM(m_blocks) AS total_blocks,
-  SUM(m_turnovers) AS total_turnovers,
-  SUM(m_personal_fouls) AS total_personal_fouls,
-  SUM(m_points) AS total_points,
-  SUM(m_plus_minus) AS total_plus_minus
+    COALESCE(team_abbreviation, '(all_teams)') as team_abbreviation,
+    season,
+    SUM(m_field_goals_made) AS total_field_goals_made,
+    SUM(m_field_goals_attempted) AS total_field_goals_attempted,
+    SUM(m_3_pointers_made) AS total_3_pointers_made,
+    SUM(m_3_pointers_attempted) AS total_3_pointers_attempted,
+    SUM(m_free_throws_made) AS total_free_throws_made,
+    SUM(m_free_throws_attempted) AS total_free_throws_attempted,
+    SUM(m_offensive_rebounds) AS total_offensive_rebounds,
+    SUM(m_defensive_rebounds) AS total_defensive_rebounds,
+    SUM(m_rebounds) AS total_rebounds,
+    SUM(m_assists) AS total_assists,
+    SUM(m_steals) AS total_steals,
+    SUM(m_blocks) AS total_blocks,
+    SUM(m_turnovers) AS total_turnovers,
+    SUM(m_personal_fouls) AS total_personal_fouls,
+    SUM(m_points) AS total_points,
+    SUM(m_plus_minus) AS total_plus_minus,
+    CASE 
+        WHEN player_name != '(all_players)' AND team_abbreviation != '(all_teams)' THEN 'player_team_aggregate' 
+        WHEN player_name != '(all_players)' AND season IS NOT NULL THEN 'player_season_aggregate'
+        WHEN team_abbreviation != '(all_teams)' THEN 'team_aggregate'
+    END AS agg_type
 FROM combined
 GROUP BY 
   GROUPING SETS (

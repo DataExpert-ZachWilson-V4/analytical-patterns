@@ -5,10 +5,9 @@
 WITH ranked_player_team_scores AS (
     SELECT player_name, 
     team_abbreviation,
-    DENSE_RANK() OVER (ORDER BY total_field_goals_made DESC) as rnk
+    DENSE_RANK() OVER (ORDER BY total_points DESC) as rnk
     FROM ovoxo.nba_game_details_grouped
-    WHERE player_name != '(all_players)'
-    AND team_abbreviation != '(all_teams)'
+    WHERE agg_type = 'player_team_aggregate'
 )
 
 SELECT player_name
