@@ -71,14 +71,15 @@ SELECT
     seasons_active,
     CASE
         WHEN first_active_season - last_active_season = 0
-        AND is_active THEN 'New' -- Player entering the league
+        AND is_active THEN 'New'
         WHEN season - last_active_year = 1
-        AND NOT is_active THEN 'Retired' -- Player leaving the league
+        AND NOT is_active THEN 'Retired'
         WHEN season - last_active_year = 1
-        AND is_active THEN 'Continued Playing' -- Player staying in the league
-        WHEN last_yearly_active_state='Retired' and is_active THEN 'Returned from Retirement' -- Player coming out of retirement
-        ELSE 'Stayed Retired' -- Player staying out of the league
+        AND is_active THEN 'Continued Playing'
+        WHEN last_year_is_active = FALSE AND is_active = TRUE THEN 'Returned from Retirement'
+        ELSE 'Stayed Retired'
     END AS yearly_active_state,
     season
 FROM
     combined
+player_name IS NOT NULL
