@@ -76,7 +76,7 @@ SELECT
         AND NOT is_active THEN 'Retired' -- Player leaving the league
         WHEN season - last_active_year = 1
         AND is_active THEN 'Continued Playing' -- Player staying in the league
-        WHEN last_yearly_active_state='Retired' and is_active=1 THEN 'Returned from Retirement' -- Player coming out of retirement
+        WHEN last_yearly_active_state='Retired' and is_active THEN 'Returned from Retirement' -- Player coming out of retirement
         ELSE 'Stayed Retired' -- Player staying out of the league
     END AS yearly_active_state,
     season
