@@ -46,7 +46,7 @@ WITH
 
 -- Select the required columns from the combined CTE
 -- and calculate the yearly_active_state based on the given conditions
-INSERT INTO videet.nba_players_state_tracking
+
 SELECT
     player_name,
     first_active_season,
