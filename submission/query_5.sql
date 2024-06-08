@@ -6,8 +6,7 @@ WITH team_wins AS (
     FROM
         raj.nba_games_grouping
     WHERE
-        -- Filtering for rows representing a single team,
-        -- and where wins are available
+        -- Filtering for rows representing a single team and where wins are available
         Agg_Level = 'team'
         AND total_win IS NOT NULL
 )

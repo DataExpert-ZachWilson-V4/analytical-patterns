@@ -1,6 +1,5 @@
 -- Create or replace table raj.nba_games_grouping
-Create or replace table raj.nba_games_grouping
--- Common Table Expression (CTE) to group games data
+Create or replace table raj.nba_games_grouping AS
 WITH games_grouping AS (
     SELECT  
         -- Select columns for grouping

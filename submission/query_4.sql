@@ -7,8 +7,7 @@ WITH player_season_points AS (
     FROM
         raj.nba_games_grouping
     WHERE
-        -- Filtering for rows representing a combination of a single player and a season,
-        -- and where points are available
+        -- Filtering for rows representing a combination of a single player and a season and where points are available
         Agg_Level = 'player_plus_season'
         AND total_player_points IS NOT NULL
 )
