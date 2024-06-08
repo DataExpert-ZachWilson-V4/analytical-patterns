@@ -23,7 +23,7 @@ WHEN c.current_season IS NULL THEN l.seasons_active
 ELSE
 l.seasons_active || ARRAY[c.current_season]
 END AS seasons_active,
-COALESCE(y.season+1, c.current_season) AS season,
+COALESCE(l.season+1, c.current_season) AS season,
 c.is_active
 from last_season l 
 full outer join current_season_cte c on l.player_name = c.player_name
