@@ -43,17 +43,26 @@ WITH
             END AS row_group
         FROM
             combined
+    ),
+    -- Finally we count the >10 pts streaks
+    -- here we show all the streaks with >10 pts and their duration
+    streaks AS (
+        SELECT
+            COUNT(1) as ten_pts_streak,
+            MIN(game_number) as intial_game,
+            MAX(game_number) as final_game,
+            MIN(game_date_est) as intial_game_date_est,
+            MAX(game_date_est) as final_game_date_est
+        FROM
+            grouped
+        WHERE
+            row_group IS NOT NULL
+        GROUP BY
+            row_group
+        ORDER BY
+            ten_pts_streak
     )
--- Finally we count the >10 pts streaks
--- here we show all the streaks with >10 pts and their duration
 SELECT
-    COUNT(1) as ten_pts_streak,
-    MIN(game_number) as intial_game,
-    MAX(game_number) as final_game,
-    MIN(game_date_est) as intial_game_date_est,
-    MAX(game_date_est) as final_game_date_est
+    MAX(ten_pts_streak) max_ten_pts_streaks
 FROM
-grouped
-WHERE row_group IS NOT NULL
-GROUP BY row_group
-ORDER BY ten_pts_streak
+    streaks
