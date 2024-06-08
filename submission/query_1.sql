@@ -13,7 +13,7 @@
 --This statement could be used to populate the newest partition of nba_players with the added column for state
 WITH last_season AS (
     SELECT *
-    FROM nba_players
+    FROM bootcamp.nba_players
     WHERE current_season = 2001
   ),
   this_season AS (
