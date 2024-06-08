@@ -55,7 +55,8 @@ WITH
                 ELSE ly.seasons_active || ARRAY[ty.active_season]
             END AS seasons_active,
             COALESCE(ly.season + 1, ty.active_season) AS season,
-            ly.yearly_active_state as last_yearly_active_state
+            ly.yearly_active_state as last_yearly_active_state,
+            ly.is_active as last_year_is_active
         FROM
             last_year ly
             FULL OUTER JOIN this_year ty ON ly.player_name = ty.player_name
