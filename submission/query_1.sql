@@ -54,7 +54,8 @@ WITH
                 WHEN ty.active_season IS NULL THEN ly.seasons_active
                 ELSE ly.seasons_active || ARRAY[ty.active_season]
             END AS seasons_active,
-            COALESCE(ly.season + 1, ty.active_season) AS season
+            COALESCE(ly.season + 1, ty.active_season) AS season,
+            ly.yearly_active_state as last_yearly_active_state
         FROM
             last_year ly
             FULL OUTER JOIN this_year ty ON ly.player_name = ty.player_name
@@ -76,7 +77,7 @@ SELECT
         WHEN season - last_active_year = 1
         AND is_active THEN 'Continued Playing' -- Player staying in the league
         WHEN season - last_active_year > 1
-        AND is_active THEN 'Returned from Retirement' -- Player coming out of retirement
+        AND is_active AND last_yearly_active_state='Retired' THEN 'Returned from Retirement' -- Player coming out of retirement
         ELSE 'Stayed Retired' -- Player staying out of the league
     END AS yearly_active_state,
     season
