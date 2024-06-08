@@ -1,4 +1,4 @@
--- Create the state tracking table:
+-- Setup - Create the state tracking table:
 -- create
 -- or replace table sarneski44638.nba_players_state_tracking (
 --     player_name VARCHAR,

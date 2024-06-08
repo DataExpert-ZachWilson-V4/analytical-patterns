@@ -1,4 +1,4 @@
--- Find player that scored the most points playing for a single team
+-- Q3 Find player that scored the most points playing for a single team
 select
     max_by(player_id, total_points) as player_id,
     max_by(player_name, total_points) as player_name,

@@ -1,4 +1,5 @@
 with
+    -- nba_games has duplicates that need to be dealt with
     deduped_games as (
         select
             game_date_est,

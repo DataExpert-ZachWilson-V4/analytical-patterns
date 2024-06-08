@@ -1,4 +1,4 @@
--- Find player that scored the most points in one season
+-- Q4 Find player that scored the most points in one season
 select
     max_by(player_id, total_points) as player_id,
     max_by(player_name, total_points) as player_name,

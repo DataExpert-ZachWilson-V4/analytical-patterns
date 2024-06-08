@@ -1,3 +1,4 @@
+-- create table first then insert
 insert into
     sarneski44638.nba_grouping_sets
 with

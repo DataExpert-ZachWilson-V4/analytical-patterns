@@ -80,4 +80,4 @@ select
 from
     streak_lengths
 WHERE
-    player_id = 2544
+    player_id = 2544 -- only interested in LeBron but could easily be used for others
