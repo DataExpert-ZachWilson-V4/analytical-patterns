@@ -2,7 +2,7 @@ WITH
   yesterday AS (
     SELECT *
     FROM ovoxo.nba_players_state_tracking
-    WHERE season = 2001
+    WHERE current_season = 2001
   ),
 
   today AS (
