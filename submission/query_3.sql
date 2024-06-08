@@ -18,8 +18,8 @@ SELECT player_name,
     total_points
 FROM grouped_data
 -- Filtered bad data for this calculation
-WHERE season is NULL
-    AND player_name IS NOT NULL
+WHERE
+    player_name IS NOT NULL
     AND team_abbreviation IS NOT NULL
 -- Ordered by descending and get the first record.
 ORDER BY total_points DESC
