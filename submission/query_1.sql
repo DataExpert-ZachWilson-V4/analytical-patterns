@@ -82,4 +82,4 @@ SELECT
     season
 FROM
     combined
-player_name IS NOT NULL
+where player_name IS NOT NULL
