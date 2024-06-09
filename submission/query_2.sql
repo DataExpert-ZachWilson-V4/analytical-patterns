@@ -3,15 +3,16 @@
 --player and season
 --team
 --Build additional queries on top of the results of the GROUPING SETS aggregations above
-CREATE OR REPLACE TABLE faraanakmirzaei15025.nba_stats_summary (
-    team_abbr VARCHAR,
-    player_name VARCHAR,
-    season VARCHAR,
-    ttl_points_score DOUBLE,
-    ttl_wins BIGINT
-  )
-WITH
-  (FORMAT = 'PARQUET', partitioning = ARRAY['season', 'team_abbr'])
+
+--CREATE OR REPLACE TABLE faraanakmirzaei15025.nba_stats_summary (
+--    team_abbr VARCHAR,
+--    player_name VARCHAR,
+--    season VARCHAR,
+--    ttl_points_score DOUBLE,
+--    ttl_wins BIGINT
+--  )
+--WITH
+--  (FORMAT = 'PARQUET', partitioning = ARRAY['season', 'team_abbr'])
 
 INSERT INTO faraanakmirzaei15025.nba_stats_summary
 WITH dedup_game_details AS (
