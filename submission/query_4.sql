@@ -94,12 +94,12 @@ WITH
       )
   ),
   -- Calculate total points per player per season and rank them
-  top_scorers_teams AS (
+  top_scorers_season AS (
     SELECT
       player_name,
       season,
       SUM(total_points) AS total_points,
-      DENSE_RANK() OVER (ORDER BY SUM(total_points) DESC) AS rank_top_team
+      DENSE_RANK() OVER (ORDER BY SUM(total_points) DESC) AS rank_top_player_season
     FROM
       aggregate_data
     WHERE
@@ -114,6 +114,6 @@ WITH
 SELECT
   player_name
 FROM
-  top_scorers_teams
+  top_scorers_season
 WHERE
-  rank_top_team = 1
+  rank_top_player_season = 1
