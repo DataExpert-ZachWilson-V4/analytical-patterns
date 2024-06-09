@@ -1,7 +1,6 @@
-"""
-    state change tracking for NBA players
-    between 1995 and 1996
-"""
+--
+--  state change tracking for NBA players
+--  between 1995 and 1996
 INSERT INTO jimmybrock65656.nba_players_state_tracking
 WITH last AS (
     -- last season results, 
