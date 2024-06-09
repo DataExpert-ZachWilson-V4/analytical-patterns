@@ -9,7 +9,7 @@ CREATE OR REPLACE TABLE ykshon52797255.nba_players_tracker(
 )
 WITH
   (FORMAT = 'PARQUET', 
-  partitioning = ARRAY['current_season']);
+  partitioning = ARRAY['current_season'])
 
 --start of the calculations
 INSERT INTO ykshon52797255.nba_players_tracker
