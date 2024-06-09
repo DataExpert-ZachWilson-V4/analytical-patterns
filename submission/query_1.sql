@@ -1,13 +1,13 @@
-CREATE OR REPLACE TABLE bgar.nba_players_tracker ( 
-    player_name VARCHAR,
-    first_active_season INT,
-    last_active_season INT,
-    seasons_active ARRAY(INT),
-    season_active_state VARCHAR,
-    season INT
-) WITH 
-    (format = 'PARQUET', 
-    partitioning = ARRAY['season'])
+-- CREATE OR REPLACE TABLE bgar.nba_players_tracker ( 
+--     player_name VARCHAR,
+--     first_active_season INT,
+--     last_active_season INT,
+--     seasons_active ARRAY(INT),
+--     season_active_state VARCHAR,
+--     season INT
+-- ) WITH 
+--     (format = 'PARQUET', 
+--     partitioning = ARRAY['season'])
 
 INSERT INTO bgar.nba_players_tracker
 WITH
