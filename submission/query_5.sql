@@ -6,7 +6,7 @@ FROM
     -- Only include rows where the data represents a single team, and where wins are available
 WHERE
     aggregation_level = 'team'
-    AND points IS NOT NULL
+    -- AND points IS NOT NULL
     -- Sort the rows in descending order based on the points to bring the highest scorer to the top
 ORDER BY
     wins DESC
