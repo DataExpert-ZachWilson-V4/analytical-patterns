@@ -50,7 +50,7 @@ final as (
     seasons_active,
     case
       when season - first_active_season = 0 then 'New'
-      when season - previous_last_active_season = 1 then 'Conitnued Playing'
+      when season - previous_last_active_season = 1 then 'Continued Playing'
       when
         is_active and season - previous_last_active_season > 1
         then 'Returned from Retirement'
@@ -58,7 +58,8 @@ final as (
         not is_active and season - previous_last_active_season = 1
         then 'Retired'
       else 'Stayed Retired'
-    end as yearly_active_state
+    end as yearly_active_state,
+    season
   from combined
 )
 

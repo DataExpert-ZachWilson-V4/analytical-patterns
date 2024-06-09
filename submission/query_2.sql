@@ -1,6 +1,6 @@
 create or replace table dennisgera.nba_game_details_aggregated as 
 select     
-    coalesce(gd.player_name, 'Overall') as player_name,
+    coalesce(gd.player_name, 'Overall') as player,
     coalesce(gd.team_abbreviation, 'Overall') as team,
     coalesce(cast(g.season as varchar), 'Overall') as season,
     case   
