@@ -7,8 +7,7 @@
 -- 4. 'Continued Playing' - A player who was active in both the previous season and the current season.
 -- 5. 'Stayed Retired' - A player who was not active in the previous season and remains inactive in the current season.
 
--- Insert into the nba_players_state_tracking table
-INSERT INTO shashankkongara.nba_players_state_tracking
+--INSERT INTO shashankkongara.nba_players_state_tracking
 WITH
   -- Subquery to select records from the previous season (1995)
   yesterday AS (
