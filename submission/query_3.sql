@@ -11,4 +11,4 @@ WHERE
   AND team_abbr <> 'overall'
 ORDER BY 
   ttl_points_score DESC 
-LIMIT 1;
+LIMIT 1
