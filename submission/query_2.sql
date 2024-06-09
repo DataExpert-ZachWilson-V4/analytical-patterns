@@ -94,4 +94,4 @@ GROUP BY
 ORDER BY
   player_name,
   team_abbreviation,
-  season;
+  season
