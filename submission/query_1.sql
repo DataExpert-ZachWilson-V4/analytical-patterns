@@ -11,7 +11,7 @@ current_season as (
     is_active,
     current_season
   from bootcamp.nba_players
-  where season = 1996
+  where current_season = 1996
 ),
 
 combined as (
@@ -36,7 +36,7 @@ combined as (
         ls.seasons_active is not null and cs.is_active
         then ls.seasons_active || array[cs.current_season]
     end as seasons_active,
-    coalesce(cs.current_season, ls.current_season + 1) as season
+    coalesce(cs.current_season, ls.season + 1) as season
   from last_season as ls
   full join current_season as cs
     on ls.player_name = cs.player_name
