@@ -1,34 +1,46 @@
 -- Build a CTE of previous season
 WITH last_season AS (
-    SELECT * 
-    FROM bootcamp.nba_players
-    WHERE current_season = 1999
+    SELECT
+        *
+    FROM srik1981.bootcamp_nba_players
+    WHERE current_season = 2000
 ),
 -- CTE for current season
 current_season AS (
-    SELECT * 
-    FROM bootcamp.nba_players
-    WHERE current_season = 2000
+    SELECT
+        n.player_name,
+        n.current_season
+    FROM bootcamp.nba_players n
+    WHERE current_season = 2001
 ),
 -- CTE for final result
 result AS (
-    SELECT
-        coalesce(l.player_name, c.player_name) AS player_name,
+    select 
+        coalesce(y.player_name, t.player_name) AS player_name,
+        coalesce(y.first_active_season, t.current_season) AS first_active_season,
+        coalesce(t.current_season, y.last_active_season) AS last_active_season,
         CASE
-            -- Last season year column is empty + current season is not and seasons cummulative array is empty
-            WHEN l.current_season IS NULL and c.current_season IS NOT NULL and l.seasons IS NULL THEN 'New'
-            -- Last season year is not empty + current season is not empty
-            WHEN l.current_season IS NOT NULL and c.current_season IS NULL THEN 'Retired'
-            -- Last season year is not empty + current season is not empty
-            WHEN l.current_season IS NOT NULL and c.current_season IS NOT NULL THEN 'Continued Playing'
-            -- Last season year is empty + current season year is not + seasons cumulative array is not empty
-            WHEN l.current_season IS NULL and c.current_season IS NOT NULL and l.seasons IS NOT NULL THEN 'Returned FROM Retirement'
-            ELSE 'Stayed Retired'
-        END AS change_tracking,
-        c.current_season
-    FROM last_season l
-    FULL OUTER JOIN current_season c
-        ON c.player_name = l.player_name
+            -- New player - No record for last season
+            WHEN y.current_season IS NULL THEN ARRAY[t.current_season]
+            -- Retired player - No record for season
+            WHEN t.current_season IS NULL THEN y.seasons
+            -- Default - Continuing player
+            else y.seasons || ARRAY[t.current_season]
+        END AS seasons_active,
+        CASE
+            -- New Players - First active season is empty and current season is not
+            WHEN y.first_active_season IS NULL and t.current_season IS NOT NULL THEN 'New'
+            -- Retired players - Whose last active season is more than 3 years ago
+            WHEN t.current_season - y.last_active_season > 3 THEN 'Retired'
+            -- Active players - Ones who played in last season and are playing in current one as well
+            WHEN t.current_season - y.last_active_season = 1 THEN 'Continued Playing'
+            -- Returning players - Ones who played after a gap of max 3 years
+            WHEN t.current_season - y.last_active_season < 3 THEN 'Returned from Retirement'
+            -- All retired players
+            else 'Stayed Retired'
+        END AS change_tracking 
+    FROM yesterday y FULL OUTER JOIN today t
+        ON t.player_name = y.player_name
 )
 SELECT 
     *
