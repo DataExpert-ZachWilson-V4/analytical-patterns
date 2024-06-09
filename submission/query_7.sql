@@ -1,8 +1,6 @@
-"""
-    use a window functions on nba_game_details to answer 
-    the question: How many games in a row did 
-    LeBron James score over 10 points a game?
-"""
+ --   use a window functions on nba_game_details to answer 
+ --   the question: How many games in a row did 
+ --   LeBron James score over 10 points a game?
 WITH nba_games_data AS (
   SELECT 
         -- Data already in "player", "game" granularity.

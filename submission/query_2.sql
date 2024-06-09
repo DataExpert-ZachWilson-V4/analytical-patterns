@@ -1,12 +1,10 @@
-"""
-    use GROUPING SETS to perform aggregations of the 
-    nba_game_details data. 
-    Create slices that aggregate along the 
-    following combinations of dimensions:
-        player and team
-        player and season
-        team
-"""
+-- use GROUPING SETS to perform aggregations of the 
+-- nba_game_details data. 
+-- Create slices that aggregate along the 
+-- following combinations of dimensions:
+--    player and team
+--    player and season
+--    team
 CREATE OR REPLACE TABLE jimmybrock65656.grouping_sets_nba AS
 SELECT
     CASE 
