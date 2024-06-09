@@ -9,20 +9,20 @@
 -- Deduplicate the game details for LeBron James and join with game dates
 WITH lebron_games AS (
     SELECT DISTINCT
-        ng.game_date_est,  -- Extracting the game date
-        ngd.pts            -- Extracting points scored by LeBron James
+        ng.game_date_est,  
+        ngd.pts          
     FROM
         bootcamp.nba_game_details ngd
     JOIN
-        bootcamp.nba_games ng ON ngd.game_id = ng.game_id  -- Joining game details with game dates
+        bootcamp.nba_games ng ON ngd.game_id = ng.game_id  
     WHERE
-        ngd.player_name = 'LeBron James'  -- Filtering for LeBron James
+        ngd.player_name = 'LeBron James' 
 ),
 
 -- Create a flag to indicate if LeBron scored over 10 points
 game_results AS (
     SELECT 
-        game_date_est,                              -- Game date
+        game_date_est,                              
         CASE WHEN pts > 10 THEN 1 ELSE 0 END AS over_ten_points  -- Flag for scoring over 10 points
     FROM 
         lebron_games
@@ -31,7 +31,7 @@ game_results AS (
 -- Use LAG to get the previous game's over_ten_points value
 lagged AS (
     SELECT 
-        game_date_est,              -- Game date
+        game_date_est,              
         over_ten_points,            -- Current game's over_ten_points flag
         LAG(over_ten_points, 1, 0) OVER (ORDER BY game_date_est) AS prev_over_ten_points  -- Previous game's over_ten_points flag
     FROM 
@@ -41,7 +41,7 @@ lagged AS (
 -- Identify streaks where the over_ten_points value changes
 streaks AS (
     SELECT 
-        game_date_est,               -- Game date
+        game_date_est,               
         over_ten_points,             -- Current game's over_ten_points flag
         CASE 
             WHEN over_ten_points != prev_over_ten_points THEN 1  -- New streak if current flag is different from previous
@@ -58,7 +58,7 @@ streaks AS (
 -- Calculate the length of each streak where LeBron scored over 10 points
 streak_lengths AS (
     SELECT 
-        streak_id,                   -- Streak identifier
+        streak_id,                 
         COUNT(*) AS streak_length    -- Length of the streak
     FROM 
         streaks
