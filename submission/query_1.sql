@@ -39,7 +39,7 @@ result AS (
             -- All retired players
             else 'Stayed Retired'
         END AS change_tracking 
-    FROM yesterday y FULL OUTER JOIN today t
+    FROM last_season y FULL OUTER JOIN current_season t
         ON t.player_name = y.player_name
 )
 SELECT 
