@@ -1,15 +1,15 @@
 --Create a table that will track the nba players' yearly active state
-CREATE OR REPLACE TABLE ykshon52797255.nba_players_tracker(
-  player_name VARCHAR,
-  first_active_season BIGINT,
-  last_active_season BIGINT,
-  seasons_active ARRAY(BIGINT),
-  yearly_active_state VARCHAR,
-  current_season BIGINT
-)
-WITH
-  (FORMAT = 'PARQUET', 
-  partitioning = ARRAY['current_season'])
+--CREATE OR REPLACE TABLE ykshon52797255.nba_players_tracker(
+-- player_name VARCHAR,
+--  first_active_season BIGINT,
+--  last_active_season BIGINT,
+--  seasons_active ARRAY(BIGINT),
+--  yearly_active_state VARCHAR,
+--  current_season BIGINT
+--)
+--WITH
+--  (FORMAT = 'PARQUET', 
+--  partitioning = ARRAY['current_season'])
 
 --start of the calculations
 INSERT INTO ykshon52797255.nba_players_tracker
