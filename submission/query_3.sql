@@ -1,6 +1,6 @@
 with player_team as(
 select player_name,team_id,sum(points) as points
-from deeptianievarghese22866.game_details_grouping
+from game_details_grouping
 group by 1,2
 )
 select player_name
