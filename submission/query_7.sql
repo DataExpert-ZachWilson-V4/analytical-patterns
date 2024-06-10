@@ -13,7 +13,7 @@ lagged AS (
         *,
         LAG(plus_10_pts, 1) OVER (PARTITION BY player_name ORDER BY game_date ASC) AS last_game_plus_10_pts -- Get player scoring > 10 pts in the last game
     FROM nba_games_data
-),
+)
 SELECT
     player_name,
     SUM(IF(plus_10_pts AND last_game_plus_10_pts, 1, 0)) AS streak_plus_10_pts_sum -- Games player scored more than 10 pts in a row
