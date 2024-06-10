@@ -15,13 +15,13 @@ JOIN bootcamp.nba_games AS games
 ),
 streak_wins_over_90 AS (
   SELECT *,
-        SUM(match_won) OVER (PARTITION BY team ORDER BY game_date ASC ROWS BETWEEN 89 PRECEDING AND CURRENT ROW) AS 90_days_wins_streak -- Rolling sum over the last 90 game 
+        SUM(match_won) OVER (PARTITION BY team ORDER BY game_date ASC ROWS BETWEEN 89 PRECEDING AND CURRENT ROW) AS ninety_days_wins_streak -- Rolling sum over the last 90 game 
   FROM nba_games_data
 )
 SELECT 
     team,
     -- team that won the most games in a 90-game stretch
-    MAX(90_days_wins_streak) AS max_wins_streak
+    MAX(ninety_days_wins_streak) AS max_wins_streak
 FROM streak_wins_over_90
 GROUP BY team
 ORDER BY max_wins_streak DESC
