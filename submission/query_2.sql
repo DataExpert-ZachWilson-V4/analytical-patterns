@@ -9,7 +9,7 @@ and d.team_id=g.home_team_id
 )
 
 
-select player_name, team_id as varchar),'(overall)') as team_id, coalesce(cast(season as varchar),'(overall)') as season, 
+select player_name, team_id as team_id, season, 
 sum(pts) as points, sum(home_team_wins) as game_wins
 from combined
 group by grouping sets(
