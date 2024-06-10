@@ -7,7 +7,7 @@ SELECT DISTINCT
         WHEN games.visitor_team_id = dedup.team_id AND home_team_wins = 0 THEN games.game_id
         WHEN home_team_wins IS NULL THEN NULL
     ELSE NULL
-    END AS match_won -- The team won the play
+    END AS match_won, -- The team won the play
     games.game_date_est AS game_date
 FROM bootcamp.nba_game_details_dedup AS dedup
 JOIN bootcamp.nba_games AS games
