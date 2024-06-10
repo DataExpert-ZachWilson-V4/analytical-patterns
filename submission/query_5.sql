@@ -5,6 +5,6 @@ group by 1
 )
 select team_abbreviation
 from team_games
-where team_id is not null
+where team_abbreviation is not null
 order by game_wins desc
 limit 1
