@@ -37,7 +37,7 @@ result AS (
             -- Returning players - Ones who were inactive last season and active the current season
             WHEN y.last_active_season < t.current_season - 1 THEN 'Returned from Retirement'
             -- All players who stayed retired
-            WHEN t.current_season IS NULL AND y.last_active_season < y.current_season THEN 'Stayed Retired'
+            WHEN t.current_season IS NULL AND y.last_active_season <= y.current_season THEN 'Stayed Retired'
         END AS change_tracking 
     FROM last_season y FULL OUTER JOIN current_season t
         ON t.player_name = y.player_name
