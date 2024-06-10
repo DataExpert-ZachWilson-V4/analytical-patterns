@@ -1,8 +1,8 @@
-INSERT INTO martinaandrulli.nba_players_state_tracking
+INSERT INTO martinaandrulli.nba_players_state
 -- Get previous season data - first iteration is empty
 WITH last_season AS (
     SELECT * 
-    FROM martinaandrulli.nba_players_state_tracking 
+    FROM martinaandrulli.nba_players_state 
     WHERE season = 2001 
 ),
 -- Get current season data
