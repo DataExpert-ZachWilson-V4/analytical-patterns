@@ -1,0 +1,12 @@
+Notes:
+
+CREATE OR REPLACE TABLE akshayjainytl54781.nba_players_track(
+    player_name VARCHAR,
+    first_active_season INT,
+    last_active_season INT,
+    seasons_active ARRAY(INT),
+    season_active_state VARCHAR,
+    season INT
+)
+WITH
+    (format = 'PARQUET', partitioning = ARRAY['season'])
