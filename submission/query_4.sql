@@ -11,7 +11,7 @@ SUM(pts) as total_points,
 SUM(case when gd.team_id = g.home_team_id and home_team_wins = 1 then 1
          when gd.team_id = g.visitor_team_id and home_team_wins = 0 then 1 
    else 0 end) as total_wins
-FROM bootcamp.nba_game_details gd 
+FROM (select distinct game_id, team_id, player_name, team_abbreviation,pts from bootcamp.nba_game_details) gd 
 JOIN bootcamp.nba_games g on gd.game_id = g.game_id 
 GROUP BY
   GROUPING SETS (
