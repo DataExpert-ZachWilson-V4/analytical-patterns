@@ -36,6 +36,7 @@ combined AS (
  SELECT team_id,
    team_abbreviation,
    MAX(wins) as max_wins
-    FROM wins_over_90
-    ORDER BY max_wins DESC
-    LIMIT 1
+ FROM wins_over_90
+ GROUP BY team_id, team_abbreviation
+ ORDER BY max_wins DESC
+ LIMIT 1
