@@ -17,11 +17,19 @@ WITH combined AS (
     WHERE games.home_team_id IS NOT NULL AND games.visitor_team_id IS NOT NULL AND home_team_wins IS NOT NULL AND dedup.team_id IS NOT NULL
 )
 SELECT
-  COALESCE(player, 'overall') AS player,
-  COALESCE(CAST(season AS VARCHAR), 'overall') AS season,
-  COALESCE(team, 'overall') AS team,
-  SUM(pts) AS total_points,
-  COUNT(DISTINCT match_won) AS total_wins
+    CASE 
+        WHEN GROUPING(player, team) = 0 
+            THEN 'player_team'
+        WHEN GROUPING(player, season) = 0 
+            THEN 'player_season'
+        WHEN GROUPING(team) = 0 
+        THEN 'team'
+    END AS aggregation_level
+    COALESCE(player, 'overall') AS player,
+    COALESCE(CAST(season AS VARCHAR), 'overall') AS season,
+    COALESCE(team, 'overall') AS team,
+    SUM(pts) AS total_points,
+    COUNT(DISTINCT match_won) AS total_wins
 FROM
   combined
 GROUP BY
