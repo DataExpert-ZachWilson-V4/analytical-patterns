@@ -20,8 +20,10 @@ streak_wins_over_90 AS (
 )
 SELECT 
     team,
-    -- team that won the most games in a 90-game stretch
-    MAX(ninety_days_wins_streak) AS max_wins_streak
+    -- team that won the most games in a 90-game streak
+    MAX(ninety_days_wins_streak) AS max_wins_streak,
+    -- determine the end date of the longest 90-day streak
+    MAX_BY(game_date, ninety_days_wins_streak) AS end_streak_date
 FROM streak_wins_over_90
 GROUP BY team
 ORDER BY max_wins_streak DESC
