@@ -1,5 +1,5 @@
 with player_team as(
-select player_name,team_abbreviation,sum(points) as points
+select player_name,team_id,sum(points) as points
 from game_details_grouping
 group by 1,2
 )
