@@ -35,4 +35,4 @@ SELECT
 FROM
   combined
 GROUP BY
-  GROUPING SETS ((player, team), (player, season), (team))
+  GROUPING SETS ((player, team), (player, season), (team)) 
