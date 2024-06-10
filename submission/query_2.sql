@@ -1,3 +1,5 @@
+CREATE
+OR REPLACE TABLE ebrunt.game_details_dashboard AS
 WITH
   games AS (
     SELECT
@@ -27,12 +29,12 @@ WITH
       JOIN games ON games.game_id = nba_game_details_dedup.game_id
   )
 SELECT
-  player,
-  season,
-  team,
-  sum(points) AS points,
-  count(DISTINCT won) AS wins
+  COALESCE(player, 'overall') AS player,
+  COALESCE(CAST(season AS varchar), 'overall') AS season,
+  COALESCE(team, 'overall') AS team,
+  sum(points) AS total_points,
+  count(DISTINCT won) AS total_wins
 FROM
   combined
 GROUP BY
-  GROUPING SETS ((player, team), (player, season), (team)) 
+  GROUPING SETS ((player, team), (player, season), (team))
