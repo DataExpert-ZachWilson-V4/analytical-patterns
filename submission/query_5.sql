@@ -1,7 +1,7 @@
 -- Which team has won the most games
-SELECT team, won_games
+SELECT team, total_wins
 FROM jimmybrock65656.grouping_sets_nba
 WHERE aggregation_level = 'team'
 AND total_points IS NOT NULL
-ORDER BY won_games DESC
+ORDER BY total_wins DESC
 LIMIT 1
