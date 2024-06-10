@@ -9,7 +9,7 @@ and d.team_id=g.home_team_id
 )
 
 
-select player_name, team_id as team_id, season, 
+select player_name, team_id, season, 
 sum(pts) as points, sum(home_team_wins) as game_wins
 from combined
 group by grouping sets(
