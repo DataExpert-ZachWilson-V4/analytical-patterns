@@ -1,6 +1,6 @@
 with team_games as(
 select team_id,sum(game_wins) as game_wins
-from deeptianievarghese22866.game_details_grouping
+from game_details_grouping
 group by 1
 )
 select team_id
