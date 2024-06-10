@@ -1,13 +1,11 @@
 -- Query to track state changes for nba_players
-INSERT INTO TABLE akshayjainytl54781.nba_players_track  AS
-
 -- Select players season = 1995
 WITH
    last_year AS (
         SELECT
             *
         FROM
-            akshayjainytl54781.nba_players_track
+            akshayjainytl54781.nba_players_track -- see notes.txt for table's schema
         WHERE
             season = 1995
     ),
