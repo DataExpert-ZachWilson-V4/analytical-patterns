@@ -27,7 +27,7 @@ SELECT
        (team_id = home_team_id AND home_team_wins = 1)
        OR (team_id = visitor_team_id AND home_team_wins = 0)
      , 1, 0) -- Total wins
-     ) AS won_games -- Count won games
+     ) AS total_wins -- Count won games
 -- use deduped data
 FROM bootcamp.nba_game_details_dedup AS gd
 JOIN bootcamp.nba_games AS g

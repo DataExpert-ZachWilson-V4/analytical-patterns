@@ -16,12 +16,13 @@ SELECT DISTINCT
 FROM bootcamp.nba_game_details_dedup AS gd
 JOIN bootcamp.nba_games AS g 
 ON g.game_id = gd.game_id
+WHERE gd.team_abbreviation IS NOT NULL
 ),
 streak AS (
   SELECT *,
         SUM(game_won) OVER (PARTITION BY team_abbreviation 
             ORDER BY game_date ASC 
-            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW) AS ninety_days_streak
+            ROWS BETWEEN 89 PRECEDING AND CURRENT ROW) AS ninety_game_streak
         -- Rolling sum of the games won in the last 90 games. 
         -- 89 preceding + 1 current = 90 games.
   FROM nba_games_data
@@ -29,10 +30,9 @@ streak AS (
 SELECT 
   team_abbreviation,
   -- determine the end date of the longest 90-day streak
-  MAX_BY(game_date,ninety_days_streak) AS end_stretch_date,
+  MAX_BY(game_date,ninety_game_streak) AS end_stretch_date,
   -- largest number of won games in a 90-day streak
-  MAX(ninety_days_streak) AS n_won_90_games_stretch
+  MAX(ninety_game_streak) AS n_won_90_games_stretch
 FROM streak
 GROUP BY team_abbreviation
 ORDER BY n_won_90_games_stretch DESC
-LIMIT 1

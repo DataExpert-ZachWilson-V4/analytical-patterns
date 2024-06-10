@@ -2,6 +2,6 @@
 SELECT team, won_games
 FROM jimmybrock65656.grouping_sets_nba
 WHERE aggregation_level = 'team'
+AND total_points IS NOT NULL
 ORDER BY won_games DESC
 LIMIT 1
--- San Antonio Spurs

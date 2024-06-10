@@ -1,31 +1,45 @@
- --   use a window functions on nba_game_details to answer 
- --   the question: How many games in a row did 
- --   LeBron James score over 10 points a game?
-WITH nba_games_data AS (
-  SELECT 
-        -- Data already in "player", "game" granularity.
-         gd.game_id, 
-         gd.player_name,
-         gd.pts > 10 AS plus_10_pts, -- If player scored more than 10 points.
-         g.game_date_est AS game_date
-  FROM bootcamp.nba_game_details_dedup AS gd
-  JOIN bootcamp.nba_games AS g ON g.game_id = gd.game_id
+--How many games in a row did LeBron James score over 10 points a game?
+with games as (
+    -- take details from games and game_details for player name LeBron James ande filter out with pts >0
+    select distinct ng.game_date_est,
+           ngd.player_id, 
+           ngd.player_name,
+           ngd.game_id,
+           ngd.pts,
+        case when ngd.pts >10 then 1
+             else 0 end as did_10
+    from bootcamp.nba_game_details ngd 
+    join bootcamp.nba_games ng 
+    on ngd.game_id = ng.game_id
+    where ngd.player_name = 'LeBron James'
+    and ngd.pts > 0
+
 ),
-lagged AS (
-  SELECT 
-    *,
-    -- lagged column to get player scored more than 
-    -- 10 pts in the last game
-    LAG(plus_10_pts, 1) OVER (PARTITION BY player_name 
-        ORDER BY game_date ASC) AS plus_10_pts_last_game
-    -- Lagged column to get if player scored more than 10 points in the last game.
-  FROM nba_games_data
+lag_data as ( --calculate previous value for did_10 using lag function
+    select *, lag(did_10,1) over (partition by player_id order by game_date_est) as prev_did_10
+    from games
+),
+streaks as ( -- calculate the streak id
+    select 
+    player_id,
+    player_name,
+    game_id,
+    pts,
+    did_10,
+    sum(case when did_10 != prev_did_10 then 1 else 0 end) over (partition by player_id order by game_date_est) as streak_id 
+
+    from lag_data 
+),
+streak_length as ( -- calculate streak length 
+    select player_id, 
+    player_name, 
+    count(1) as streak_length 
+    from streaks
+    group by player_id, player_name, streak_id 
+    having max(did_10) =1
 )
-SELECT
-  player_name,
-  -- count of games player scored more than 10 pts
-  SUM(IF(plus_10_pts AND plus_10_pts_last_game,1,0)) AS plus_10_pts_row
-FROM lagged
--- filter for Lebron James
-WHERE player_name = 'LeBron James'
-GROUP BY player_name
+
+select max_by(player_id, streak_length) as player_id,
+max_by(player_name, streak_length) as player_name,
+max(streak_length) as games_in_a_row_with_score_over_10_pts
+from streak_length
