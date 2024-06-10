@@ -1,8 +1,8 @@
-INSERT INTO martinaandrulli.nba_players_state
+INSERT INTO martinaandrulli.players_state_tracking
 -- Get previous season data - first iteration is empty
 WITH last_season AS (
     SELECT * 
-    FROM martinaandrulli.nba_players_state 
+    FROM martinaandrulli.players_state_tracking 
     WHERE season = 2001 
 ),
 -- Get current season data
@@ -36,11 +36,11 @@ SELECT
   last_active_season,
   seasons_active,
   CASE
-      WHEN season - first_active_season  = 0 AND is_active THEN 'New'
-      WHEN season - last_active_season = 1 AND is_active THEN 'Continued Playing'
-      WHEN season - last_active_season = 1 AND NOT is_active THEN 'Retired'
-      WHEN season - last_active_season > 1 AND is_active THEN 'Returned from Retirement'
-      ELSE 'Stayed Retired'
+      WHEN season - first_active_season  = 0 AND is_active THEN 'New' -- Current season matches the first active one for the player
+      WHEN season - last_active_season = 1 AND is_active THEN 'Continued Playing' -- Last active season was one year before the current, but the player is still active
+      WHEN season - last_active_season = 1 AND NOT is_active THEN 'Retired' -- Last active season was one year before the current, but the player is no more active
+      WHEN season - last_active_season > 1 AND is_active THEN 'Returned from Retirement' -- Last active season was more than one year before the current, but the player is still active
+      ELSE 'Stayed Retired' -- Last active season was more than one year before the current and the player is no more active
   END AS player_state,
   season
 FROM combined
