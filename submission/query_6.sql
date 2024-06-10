@@ -1,5 +1,3 @@
---"What is the most games a single team has won in a given 90-game stretch?"
-
 WITH
  nba_game_details_dedup AS (
    SELECT game_id,
@@ -35,7 +33,9 @@ combined AS (
     FROM combined
   )
     
- SELECT MAX_BY(team_id, wins) AS team_id,
-   MAX_BY(team_abbreviation, wins) as team_abbreviation,
+ SELECT team_id,
+   team_abbreviation,
    MAX(wins) as max_wins
     FROM wins_over_90
+    ORDER BY max_wins DESC
+    LIMIT 1
