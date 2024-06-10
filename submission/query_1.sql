@@ -16,6 +16,7 @@ CREATE OR REPLACE TABLE nancyatienno21998.nba_players_tracker (
     (format = 'PARQUET', 
     partitioning = ARRAY['season'])
 
+INSERT INTO nancyatienno21998.nba_players_tracker
 
 WITH last_season AS(
   SELECT
