@@ -43,10 +43,10 @@ SELECT
     last_active_season,
     seasons_active,
     CASE
-        WHEN active_season IS NOT NULL AND active_previous_season IS NULL THEN 'New' -- New to the league
-        WHEN active_season IS NOT NULL AND active_previous_season IS NOT NULL THEN 'Continued Playing' -- Continued playing
-        WHEN active_season IS NOT NULL AND active_previous_season IS NULL AND last_active_season < active_season - 1 THEN 'Returned from Retirement' -- check if a player was previously active, retired, and then became active again
-        WHEN active_season IS NULL AND active_previous_season IS NOT NULL THEN 'Retired' -- Retired
+        WHEN season - first_active_season  = 0 AND is_active THEN 'New'
+        WHEN season - last_active_season_previous = 1 AND is_active THEN 'Continued Playing'
+        WHEN season - last_active_season_previous = 1 AND NOT is_active THEN 'Retired'
+        WHEN season - last_active_season_previous > 1 AND is_active THEN 'Returned from Retirement'
         ELSE 'Stayed Retired'
     END as season_active_state,
     season
