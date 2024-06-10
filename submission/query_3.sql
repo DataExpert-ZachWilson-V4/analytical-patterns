@@ -26,10 +26,12 @@ aggregated AS (
     , COALESCE(team_abbreviation, '(Overall)') as team
     , COALESCE(CAST(season as VARCHAR), '(Overall)') as season
     , SUM(pts) as sum_of_pts
-    , SUM(CASE WHEN min IS NULL THEN 0 WHEN min = '0' THEN 0
-    ELSE 1 END) as games_played --this aggregation may produce more games played than recorded in the nba_player_seasons.gp field; the more detailed grain is used here since I cannot troubleshoot the pre-aggregated amount in nba_player_seasons
-    , SUM(CASE WHEN team_id = home_team_id AND home_team_wins = 1 THEN 1
-    WHEN team_id = visitor_team_id AND home_team_wins = 0 THEN 1 ELSE 0 END) as wins --wins are semi-additive and should be removed for the team_abbreviation grouping set; this can be done by adding another CTE then a CASE statement to return nulls for the overall team_abbreviation grouping.
+    , SUM(CASE WHEN min IS NULL THEN 0 --determines that a player didn't have any minutes played during a game based on nulls
+      WHEN min = '0' THEN 0 --determines that a player didn't have any minutes played during a game based on 0 minutes
+      ELSE 1 END) as games_played --this aggregation may produce more games played than recorded in the nba_player_seasons.gp field; the more detailed grain is used here since I cannot troubleshoot the pre-aggregated amount in nba_player_seasons
+    , SUM(CASE WHEN team_id = home_team_id AND home_team_wins = 1 THEN 1 --determines a win for a player when they're on the home team
+      WHEN team_id = visitor_team_id AND home_team_wins = 0 THEN 1 --determines a win for a player when they're on the visiting team
+      ELSE 0 END) as wins --wins are semi-additive and should be removed for the team_abbreviation grouping set; this can be done by adding another CTE then a CASE statement to return nulls for the overall team_abbreviation grouping.
   FROM combined
   GROUP BY
     GROUPING SETS (
@@ -46,4 +48,5 @@ SELECT
 FROM aggregated
 WHERE player <> '(Overall)' AND team <> '(Overall)'
 GROUP BY team
-ORDER BY 2 DESC
+ORDER BY max_pts DESC
+LIMIT 1
