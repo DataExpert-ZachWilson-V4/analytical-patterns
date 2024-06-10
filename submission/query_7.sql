@@ -73,3 +73,4 @@ SELECT
     MAX(streak_length) AS max_streak_length  -- The longest streak of games where LeBron scored over 10 points
 FROM 
     streak_lengths
+
