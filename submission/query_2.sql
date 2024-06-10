@@ -1,4 +1,4 @@
-create table deeptianievarghese22866.game_details_grouping as
+create or replace table deeptianievarghese22866.game_details_grouping as
 with combined as(
 select *
 from bootcamp.nba_game_details d
