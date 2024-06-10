@@ -24,7 +24,7 @@ SELECT
             THEN 'player_season'
         WHEN GROUPING(team) = 0 
         THEN 'team'
-    END AS aggregation_level
+    END AS aggregation_level,
     COALESCE(player, 'overall') AS player,
     COALESCE(CAST(season AS VARCHAR), 'overall') AS season,
     COALESCE(team, 'overall') AS team,
