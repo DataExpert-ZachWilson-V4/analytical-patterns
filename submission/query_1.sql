@@ -30,14 +30,14 @@ result AS (
         CASE
             -- New Players - First active season is empty and current season is not
             WHEN y.first_active_season IS NULL and t.current_season IS NOT NULL THEN 'New'
-            -- Retired players - Whose last active season is more than 3 years ago
-            WHEN t.current_season - y.last_active_season > 3 THEN 'Retired'
+            -- Retired players - Who did not play current season but played in the last
+            WHEN t.current_season IS NULL and y.last_active_season = y.current_season THEN 'Retired'
             -- Active players - Ones who played in last season and are playing in current one as well
             WHEN t.current_season - y.last_active_season = 1 THEN 'Continued Playing'
-            -- Returning players - Ones who played after a gap of max 3 years
-            WHEN t.current_season - y.last_active_season < 3 THEN 'Returned from Retirement'
-            -- All retired players
-            else 'Stayed Retired'
+            -- Returning players - Ones who were inactive last season and active the current season
+            WHEN y.last_active_season < t.current_season - 1 THEN 'Returned from Retirement'
+            -- All players who stayed retired
+            WHEN t.current_season IS NULL AND y.last_active_season < y.current_season THEN 'Stayed Retired'
         END AS change_tracking 
     FROM last_season y FULL OUTER JOIN current_season t
         ON t.player_name = y.player_name
