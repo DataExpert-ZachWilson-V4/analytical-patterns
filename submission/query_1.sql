@@ -5,16 +5,16 @@
 --A player that comes out of retirement should be Returned from Retirement
 --A player that stays out of the league should be Stayed Retired
 
-CREATE OR REPLACE TABLE nancyatienno21998.nba_players_tracker (
-    player_name VARCHAR,
-    first_active_season INT,
-    last_active_season INT,
-    seasons_active ARRAY(INT),
-    season_active_state VARCHAR,
-    season INT
-    ) WITH
-    (format = 'PARQUET',
-    partitioning = ARRAY['season'])
+---CREATE OR REPLACE TABLE nancyatienno21998.nba_players_tracker (
+---    player_name VARCHAR,
+--    first_active_season INT,
+---    last_active_season INT,
+---    seasons_active ARRAY(INT),
+---    season_active_state VARCHAR,
+---    season INT
+---    ) WITH
+--    (format = 'PARQUET',
+---    partitioning = ARRAY['season'])
 
 INSERT INTO nancyatienno21998.nba_players_tracker
 WITH last_season AS(
