@@ -117,3 +117,5 @@ FROM
   top_scorers_season
 WHERE
   rank_top_player_season = 1
+
+

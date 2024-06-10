@@ -103,3 +103,4 @@ SELECT
   partition_season
 FROM
   combined
+
