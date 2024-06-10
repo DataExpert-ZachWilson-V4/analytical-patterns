@@ -1,3 +1,4 @@
+CREATE TABLE game_details_dashboard AS
 WITH combined AS (
     SELECT
       games.season,
@@ -12,7 +13,8 @@ WITH combined AS (
       END AS match_won
     FROM
       bootcamp.nba_game_details_dedup AS dedup
-      JOIN bootcamp.nba_games AS games ON games.game_id = dedup.game_id
+    JOIN bootcamp.nba_games AS games ON games.game_id = dedup.game_id
+    WHERE games.home_team_id IS NOT NULL AND games.visitor_team_id IS NOT NULL AND home_team_wins IS NOT NULL AND dedup.team_id IS NOT NULL
 )
 SELECT
   COALESCE(player, 'overall') AS player,
