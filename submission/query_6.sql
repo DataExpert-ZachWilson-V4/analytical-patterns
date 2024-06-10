@@ -3,8 +3,8 @@ SELECT DISTINCT
     dedup.game_id,
     dedup.team_abbreviation AS team,
     CASE
-        WHEN games.home_team_id = dedup.team_id AND home_team_wins = 1 THEN games.game_id
-        WHEN games.visitor_team_id = dedup.team_id AND home_team_wins = 0 THEN games.game_id
+        WHEN games.home_team_id = dedup.team_id AND home_team_wins = 1 THEN 1
+        WHEN games.visitor_team_id = dedup.team_id AND home_team_wins = 0 THEN 0
         WHEN home_team_wins IS NULL THEN NULL
     ELSE NULL
     END AS match_won, -- The team won the play
