@@ -1,6 +1,6 @@
 -- Which team has won the most games?
 -- This question doesn't require a GROUPING SETS query.
--- The following simple query should suffice:
+-- The following simple query should suffice: 
 
 WITH winning_teams AS (
   SELECT

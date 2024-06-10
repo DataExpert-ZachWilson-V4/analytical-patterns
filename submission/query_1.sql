@@ -1,4 +1,4 @@
--- State Change-Tracking table for `nba_players`
+-- State Change-Tracking table for `nba_players`.
 SELECT
   player_name,
   seasons,

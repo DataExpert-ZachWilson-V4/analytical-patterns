@@ -1,7 +1,7 @@
 -- Grouping Sets for `nba_game_details` aggregations on
--- 1. player and team
--- 2. player and season
--- 3. team
+-- 1. player and team;
+-- 2. player and season;
+-- 3. team.
 
 -- Deduplicating the `nba_game_details` table
 WITH nba_game_details_deduped AS (

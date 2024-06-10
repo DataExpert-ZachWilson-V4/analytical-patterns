@@ -12,7 +12,7 @@ WITH nba_game_details_deduped AS (
     ROW_NUMBER() OVER (PARTITION BY game_id, team_id, player_id ORDER BY pts DESC) AS row_num
   FROM bootcamp.nba_game_details
 ),
--- Combining with `nba_games` to retrieve the season
+-- Combining with `nba_games` to retrieve the season 
 combined AS (
   SELECT
     gd.game_id,
