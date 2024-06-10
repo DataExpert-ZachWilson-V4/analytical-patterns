@@ -12,12 +12,11 @@ CREATE OR REPLACE TABLE nancyatienno21998.nba_players_tracker (
     seasons_active ARRAY(INT),
     season_active_state VARCHAR,
     season INT
-    ) WITH 
-    (format = 'PARQUET', 
+    ) WITH
+    (format = 'PARQUET',
     partitioning = ARRAY['season'])
 
 INSERT INTO nancyatienno21998.nba_players_tracker
-
 WITH last_season AS(
   SELECT
     *
@@ -49,7 +48,10 @@ FROM last_season ls
 FULL OUTER JOIN current_season cs ON ls.player_name = cs.player_name
 )
 SELECT
-  *,
+  player_name,
+  first_active_season,
+  last_active_season,
+  seasons_active,
   CASE
     WHEN is_active and first_active_season - last_active_season = 0 THEN 'New'
     WHEN is_active and season - last_active_season =1 THEN 'Continued Playing'
@@ -57,5 +59,6 @@ SELECT
     WHEN NOT is_active and season - last_active_season = 1 THEN 'Retired'
     WHEN NOT is_active and season - last_active_season >1 THEN 'Stayed Retired'
     ELSE 'ERROR'
-  END AS season_active_state
+  END AS season_active_state,
+  season
 from combined
