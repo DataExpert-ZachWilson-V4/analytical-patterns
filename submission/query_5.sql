@@ -31,3 +31,4 @@ SELECT
   rank
 FROM ranked_team_wins
 ORDER BY rank ASC
+limit 1

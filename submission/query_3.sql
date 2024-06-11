@@ -81,3 +81,4 @@ SELECT
   rank
 FROM game_stats_with_totals
 ORDER BY pts desc, g_season ASC, rank ASC, game_date_est ASC
+limit 1

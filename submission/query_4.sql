@@ -63,4 +63,4 @@ SELECT
   rank
 FROM ranked_stats
 ORDER BY total_pts desc, g_season ASC, rank ASC
-
+limit 1
