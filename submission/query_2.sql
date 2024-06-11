@@ -1,81 +1,85 @@
-With nba_game_details_dedup As
+CREATE OR REPLACE TABLE Jaswanthv.nba_games_aggregate AS
+With nba_game_details_dedup AS
 (
-Select
+SELECT
   game_id,
   team_id,
   team_abbreviation,
   player_id,
   player_name,
   pts,
-  ROW_NUMBER() Over (Partition by player_id,game_id, team_id order by player_id, game_id, team_id) As rnk
-from bootcamp.nba_game_details
-order by game_id
+  ROW_NUMBER() Over (Partition by player_id,game_id, team_id ORDER BY player_id, game_id, team_id) AS rnk
+FROM bootcamp.nba_game_details
 )
-, nba_details As
+, nba_details AS
 (
-Select 
+SELECT 
   game_id,
   team_id,
   team_abbreviation,
   player_id,
   player_name,
   pts 
-from nba_game_details_dedup where rnk = 1
+FROM nba_game_details_dedup WHERE rnk = 1
 )
-, nba_games_dedup As
+, nba_games_dedup AS
 (
-Select 
+SELECT 
 game_id,
 season,
 home_team_id,
 visitor_team_id,
 home_team_wins,
-ROW_NUMBER() OVER(PARTITION BY game_id order by game_id) As rnk
-from bootcamp.nba_games
-order by game_id
+ROW_NUMBER() OVER(PARTITION BY game_id ORDER BY game_id) AS rnk  -- Deduping the data
+FROM bootcamp.nba_games
 )
-, nba_games As
+, nba_games AS
 (
-Select 
+SELECT 
   game_id,
   season,
   home_team_id,
   visitor_team_id,
   home_team_wins
-from nba_games_dedup where rnk = 1
+FROM nba_games_dedup WHERE rnk = 1
 )
-, Preagg As
+, Preagg AS
 (
-	Select
-    	COALESCE(CAST(ng.season As VARCHAR),'Unknown_Season') As Season,
-    	COALESCE(nd.player_name,'Player_UnIdentified') As Player,
-    	COALESCE(nd.team_abbreviation,'N/A') As Team,
-		nd.pts As pts,
-		nd.team_id As team_id,
-		ng.home_team_id As home_team_id,
-		ng.visitor_team_id  As visitor_team_id,
-		ng.home_team_wins As home_team_wins
-	From nba_details nd Join nba_games ng
-	on nd.game_id = ng.game_id
+	SELECT
+    	COALESCE(CAST(ng.season AS VARCHAR),'Unknown_Season') AS Season, -- Handling Nulls here so that the Grouping sets Null Handling doesn't overwrite source nulls with the Grouping set Null handling values.
+    	COALESCE(nd.player_name,'Player_UnIdentified') AS Player,
+    	COALESCE(nd.team_abbreviation,'N/A') AS Team,
+		nd.pts AS pts,
+		nd.team_id AS team_id,
+		ng.home_team_id AS home_team_id,
+		ng.visitor_team_id  AS visitor_team_id,
+		ng.home_team_wins AS home_team_wins
+	FROM nba_details nd JOIN nba_games ng
+	ON nd.game_id = ng.game_id
 )
 
-Select
-  COALESCE(Season,'(Overall)') As Season,
-  COALESCE(Player,'(Overall)') As Player,
-  COALESCE(Team,'(Overall)') As Team,
-  SUM(pts) As Player_Total_Points,
-  SUM(CASE
-        WHEN team_id = home_team_id and home_team_wins = 1 Then 1
-        WHEN team_id = visitor_team_id and home_team_wins = 0 Then 1
+SELECT
+    CASE 
+        WHEN GROUPING(Player, Team) = 0 THEN 'Player__Team'
+        WHEN GROUPING(Player, Season) = 0 THEN 'Player__Season'
+        WHEN GROUPING(Team) = 0 THEN 'Team'
+    END AS aggregation_level,
+  	COALESCE(Season,'(Overall)') AS Season,
+  	COALESCE(Player,'(Overall)') AS Player,
+  	COALESCE(Team,'(Overall)') AS Team,
+  	SUM(pts) AS Player_Total_Points,
+  	SUM(CASE
+        	WHEN team_id = home_team_id AND COALESCE(home_team_wins,0) = 1 Then 1
+        	WHEN team_id = visitor_team_id AND COALESCE(home_team_wins,1) = 0 Then 1
         Else 0 
-      END) As Total_Wins        
-From Preagg
-Group by
+      	END) AS Total_Wins        
+FROM Preagg
+GROUP BY
 GROUPING SETS (
 (Player,Team),
 (Player,Season),
 (Team)
 )
-order by Player,Team,Season
+
 
 --Pushing dummy change for autograder
