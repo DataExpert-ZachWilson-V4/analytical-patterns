@@ -45,7 +45,7 @@ SELECT
       WHEN season - last_active_season_previous = 1 AND is_active THEN 'Continued Playing'
       WHEN season - last_active_season_previous = 1 AND NOT is_active THEN 'Retired'
       WHEN season - last_active_season_previous > 1 AND is_active THEN 'Returned from Retirement'
-      ELSE 'Stayed Retired' -- current player status
+      ELSE 'Stayed Retired' -- this is the current status of the player
   END AS player_state,
   season
 FROM combined
