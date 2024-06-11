@@ -1,3 +1,12 @@
+--CREATE TABLE kmbarth.nba_stats_summary (
+--  team_abbr varchar,
+--  player_name varchar,
+--  season varchar,
+--  ttl_points_scored double,
+--  team_wins bigint
+--)
+--WITH ( format = 'PARQUET',  partitioning = ARRAY['season'] )
+
 INSERT INTO kmbarth.nba_stats_summary
 WITH dedup_game_details AS (
   SELECT 

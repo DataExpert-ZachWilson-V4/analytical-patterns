@@ -1,3 +1,15 @@
+-- create table kmbarth.nba_players_tracker(
+--    player_name VARCHAR,
+--    first_active_season integer,
+--    last_active_season integer,
+--    seasons_active array(integer),
+--    season_active_state varchar,
+--    season integer
+--    )
+    
+WITH ( format = 'PARQUET', partitioning = ARRAY['season'] )
+
+
 INSERT INTO kmbarth.nba_players_tracker
 WITH
     yesterday as (
