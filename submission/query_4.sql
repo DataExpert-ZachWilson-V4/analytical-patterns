@@ -4,6 +4,6 @@ where aggregation_level='player_name__season'
 group by 1,2
 order by points
 limit 1
-)
+
 
 
