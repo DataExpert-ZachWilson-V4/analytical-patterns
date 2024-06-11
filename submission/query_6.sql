@@ -8,7 +8,7 @@ WITH combined_games AS (
 ),
 --Finding rolling sum of wins by team over 90 game stretch
 home_team_count as(
-SELECT team_id, sum(team_wins) over(partition by home_team_id order by game_id rows between 89 preceding and current row) as count_wins
+SELECT team_id, sum(team_wins) over(partition by team_id order by game_id rows between 89 preceding and current row) as count_wins
 FROM combined_games
 ),
 --Find max count of wins for each team
