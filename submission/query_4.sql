@@ -3,7 +3,7 @@ SELECT
 	player_name,
 	season,
 	total_points
-FROM nba_game_stats
+FROM aasimsani0586451.nba_game_stats
 WHERE grouping_type = 'player_season'
 	AND player_name != 'overall'
 	AND season != 'overall'

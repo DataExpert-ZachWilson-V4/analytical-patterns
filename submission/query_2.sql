@@ -3,7 +3,8 @@
 -- 	player_name VARCHAR,
 -- 	season VARCHAR,
 -- 	team_wins INT,
--- 	total_points INT
+-- 	total_points INT,
+-- 	grouping_type VARCHAR
 -- )
 
 -- INSERT INTO aasimsani0586451.nba_game_stats
@@ -44,7 +45,7 @@ game_and_player_details as (
 		END AS game_location_won
 	FROM bootcamp.nba_game_details_dedup as game_details
 		INNER JOIN distinct_games as games ON game_details.game_id = games.game_id
-),
+)
 
 
 -- Make the grouping sets
