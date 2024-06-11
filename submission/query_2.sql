@@ -69,8 +69,8 @@ SELECT
   	COALESCE(Team,'(Overall)') AS Team,
   	SUM(pts) AS Player_Total_Points,
   	SUM(CASE
-        	WHEN team_id = home_team_id AND COALESCE(home_team_wins,0) = 1 Then 1
-        	WHEN team_id = visitor_team_id AND COALESCE(home_team_wins,1) = 0 Then 1
+        	WHEN team_id = home_team_id AND home_team_wins = 1 Then 1
+        	WHEN team_id = visitor_team_id AND home_team_wins = 0 Then 1
         Else 0 
       	END) AS Total_Wins        
 FROM Preagg
@@ -82,4 +82,3 @@ GROUPING SETS (
 )
 
 
---Pushing dummy change for autograder
