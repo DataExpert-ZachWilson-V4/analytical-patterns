@@ -8,7 +8,7 @@ SELECT
     -- season that's associated with the max total points
     MAX_BY(season, total_points) as season
 FROM 
-    hw5_q2
+    bhautikgandhi.hw5_q2
 WHERE
     -- since we are only interested in player-season aggregate, set team_id to null
     player_name is not null and season is not null and team_id is null

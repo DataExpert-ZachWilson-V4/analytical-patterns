@@ -25,7 +25,7 @@
 --     average_plus_minus DOUBLE,
 --     total_wins DOUBLE
 -- )
-INSERT INTO hw5_q2
+INSERT INTO bhautikgandhi.hw5_q2
 WITH nba_games_unnest AS (
     SELECT 
         game_id,

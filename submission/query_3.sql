@@ -8,7 +8,7 @@ SELECT
     -- team of the player that's associated with the max total points
     MAX_BY(team_id, total_points) as team_id
 FROM 
-    hw5_q2
+    bhautikgandhi.hw5_q2
 WHERE
     -- Since we are only interested in the player-team aggregate, we should have season set to null in grouping sets
     player_id is not null and team_id is not null and season is null

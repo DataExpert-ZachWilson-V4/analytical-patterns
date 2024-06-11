@@ -1,9 +1,9 @@
-INSERT INTO nba_players_state_change
+INSERT INTO bhautikgandhi.nba_players_state_change
 WITH yesterday AS (
     SELECT
         *
     FROM
-        nba_players_state_change
+        bhautikgandhi.nba_players_state_change
     WHERE
         season = 1995
 ),
