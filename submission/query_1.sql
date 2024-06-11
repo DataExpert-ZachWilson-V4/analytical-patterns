@@ -1,4 +1,4 @@
-INSERT INTO adbeyer.nba_state_change
+INSERT INTO adbeyer.nba_state_change 
 WITH last_season
      AS (SELECT *
          FROM   adbeyer.nba_state_change
