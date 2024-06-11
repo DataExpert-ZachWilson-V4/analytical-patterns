@@ -1,4 +1,4 @@
-CREATE TABLE pratzo.game_details_dashboard AS
+CREATE TABLE game_details_dashboard AS
 WITH
   combined AS (
     SELECT
