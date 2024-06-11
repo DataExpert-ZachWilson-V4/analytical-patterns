@@ -6,6 +6,7 @@
 --  A player that comes out of retirement should be "Returned from Retirement"  - When the player has data for last season and for current season, and the most recent season played was prior to last season
 --  Any other scenario is represented by NA
 
+
 WITH last_season AS (
     SELECT *
     FROM bootcamp.nba_players
