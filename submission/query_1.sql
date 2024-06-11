@@ -1,18 +1,18 @@
 
 -- Create or replace the players_state_tracking table
-CREATE OR REPLACE TABLE luiscoelho37431.players_state_tracking (
-    player_name STRING,
-    first_active_season INTEGER,
-    last_active_season INTEGER,
-    seasons_active ARRAY<INTEGER>,
-    is_active BOOL,
-    season INTEGER
-)
-WITH
-(
-    FORMAT = 'PARQUET',
-    partitioning = ARRAY['season']
-)
+-- CREATE OR REPLACE TABLE luiscoelho37431.players_state_tracking (
+--     player_name VARCHAR,
+--     first_active_season INTEGER,
+--     last_active_season INTEGER,
+--     seasons_active ARRAY<INTEGER>,
+--     is_active BOOLEAN,
+--     season INTEGER
+-- )
+-- WITH
+-- (
+--     FORMAT = 'PARQUET',
+--     partitioning = ARRAY['season']
+-- )
 
 -- Insert data into the players_state_tracking table
 INSERT INTO luiscoelho37431.players_state_tracking
