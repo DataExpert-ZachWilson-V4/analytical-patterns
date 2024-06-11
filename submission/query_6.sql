@@ -7,7 +7,7 @@ WITH combined_games AS (
     FROM bootcamp.nba_games
 ),
 --Finding rolling sum of wins by team over 90 game stretch
-with home_team_count as(
+home_team_count as(
 SELECT home_team_id, sum(home_team_wins) over(partition by home_team_id order by game_id rows between 89 preceding and current row) as count_wins
 FROM combined_games
 ),
