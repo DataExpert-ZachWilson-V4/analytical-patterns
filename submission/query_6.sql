@@ -18,11 +18,14 @@ unique_team_data as (
 	SELECT DISTINCT team_id, team_abbreviation, game_id 
 	FROM bootcamp.nba_game_details_dedup 
 ),
+
+--  Get the team wins
 team_win_details as (
 	SELECT
 		game_details.team_id,
 		game_details.team_abbreviation,
 		games.game_date_est,
+		-- Same logic as Query 2
 		CASE WHEN games.home_team_wins = 1 AND game_details.team_id = games.home_team_id THEN 1
 			WHEN games.home_team_wins = 0 AND game_details.team_id = games.visitor_team_id THEN 1
 			ELSE 0
@@ -31,6 +34,7 @@ team_win_details as (
 	ON game_details.game_id = games.game_id
 ),
 
+-- Create a summed rolling window of 90 games
 rolling_window as (
 	SELECT 
 		team_id,
@@ -44,6 +48,7 @@ rolling_window as (
 	FROM team_win_details
 )
 
+-- Find the largest rolling window of wins
 SELECT team, MAX(rolling_wins) as max_wins_in_90_game_window
 FROM rolling_window
 GROUP BY team

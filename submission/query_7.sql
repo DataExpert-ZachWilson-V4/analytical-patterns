@@ -23,25 +23,39 @@ player_score_data as (
 		INNER JOIN distinct_games as games ON game_details.game_id = games.game_id
 	WHERE game_details.player_name = 'LeBron James'
 ),
+
+-- Use LAG to create a streak identifier
 prev_games as (
 	SELECT *,
-		LAG(player_scored_10_or_more, 1) OVER ( PARTITION BY player_name
+		LAG(player_scored_10_or_more, 1) OVER (
+			PARTITION BY player_name
 			ORDER BY game_date_est ASC
 		) as previous_game_scored_10_or_more
 	FROM player_score_data
 ),
 streaks as (
-	SELECT 
-		*,
-		SUM(IF(player_scored_10_or_more = 1 AND NOT previous_game_scored_10_or_more = 1, 1, 0)) OVER (PARTITION BY player_name ORDER BY game_date_est ASC) as streak
+	SELECT *,
+		-- Streak check
+		SUM(
+			IF(
+				player_scored_10_or_more = 1
+				AND NOT previous_game_scored_10_or_more = 1,
+				1,
+				0
+			)
+		) OVER (
+			PARTITION BY player_name
+			ORDER BY game_date_est ASC
+		) as streak
 	FROM prev_games
 )
 
-SELECT 
-	player_name,
+-- Get longest streak length for LeBron James
+SELECT player_name,
 	MAX(COUNT(*)) OVER (PARTITION BY player_name, streak) as longest_streak
 FROM streaks
 WHERE player_scored_10_or_more = 1
-GROUP BY player_name, streak
+GROUP BY player_name,
+	streak
 ORDER BY longest_streak DESC
 LIMIT 1
