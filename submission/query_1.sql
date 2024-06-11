@@ -5,7 +5,7 @@
 --     first_active_season INTEGER,
 --     last_active_season INTEGER,
 --     seasons_active ARRAY<INTEGER>,
---     is_active BOOLEAN,
+--     is_active VARCHAR(24),
 --     season INTEGER
 -- )
 -- WITH
