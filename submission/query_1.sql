@@ -1,9 +1,26 @@
+
+-- Create or replace the players_state_tracking table
+CREATE OR REPLACE TABLE luiscoelho37431.players_state_tracking (
+    player_name STRING,
+    first_active_season INTEGER,
+    last_active_season INTEGER,
+    seasons_active ARRAY<INTEGER>,
+    is_active BOOL,
+    season INTEGER
+)
+WITH
+(
+    FORMAT = 'PARQUET',
+    partitioning = ARRAY['season']
+)
+
+-- Insert data into the players_state_tracking table
 INSERT INTO luiscoelho37431.players_state_tracking
 WITH last_season AS (
     -- Selecting data from the players_state_tracking table for the previous season (2001)
-    SELECT * 
-    FROM luiscoelho37431.players_state_tracking 
-    WHERE season = 2001 
+    SELECT *
+    FROM luiscoelho37431.players_state_tracking
+    WHERE season = 2001
 ),
 current_season AS (
     -- Selecting data from the nba_players table for the current season (2002)
@@ -23,8 +40,8 @@ combined AS (
             -- Determining the seasons_active based on the conditions
             WHEN ls.seasons_active IS NULL AND cs.is_active THEN ARRAY[cs.current_season]
             WHEN ls.seasons_active IS NOT NULL AND (cs.is_active IS NULL OR NOT cs.is_active) THEN ls.seasons_active
-            ELSE ls.seasons_active || ARRAY[cs.current_season] 
-        END AS seasons_active, 
+            ELSE ls.seasons_active || ARRAY[cs.current_season]
+        END AS seasons_active,
         cs.is_active,
         COALESCE(ls.season + 1, cs.current_season) AS season
     FROM last_season AS ls
@@ -38,7 +55,7 @@ SELECT
   seasons_active,
   CASE
       -- Determining the player_state based on the conditions
-      WHEN season - first_active_season  = 0 AND is_active THEN 'New' 
+      WHEN season - first_active_season  = 0 AND is_active THEN 'New'
       WHEN season - last_active_season = 1 AND is_active THEN 'Continued Playing'
       WHEN season - last_active_season = 1 AND NOT is_active THEN 'Retired'
       WHEN season - last_active_season > 1 AND is_active THEN 'Returned from Retirement'
