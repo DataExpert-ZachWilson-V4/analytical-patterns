@@ -7,7 +7,7 @@
 --    season integer
 --    )
     
-WITH ( format = 'PARQUET', partitioning = ARRAY['season'] )
+-- WITH ( format = 'PARQUET', partitioning = ARRAY['season'] )
 
 
 INSERT INTO kmbarth.nba_players_tracker
