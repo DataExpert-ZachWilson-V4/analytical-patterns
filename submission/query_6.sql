@@ -1,5 +1,5 @@
 with home_team_count as(
-SELECT home_team_id, sum(home_team_wins) over(partition by home_team_id order by game_id rows between 45 preceding and 45 following) as count_wins
+SELECT home_team_id, sum(home_team_wins) over(partition by home_team_id order by game_id rows between 89 preceding and current row) as count_wins
 FROM bootcamp.nba_games
 ),
 wins_by_team as(
