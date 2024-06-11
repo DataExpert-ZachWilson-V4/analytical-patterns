@@ -1,4 +1,5 @@
 -- State Change-Tracking table for `nba_players`.
+CREATE TABLE nba_players_state_tracking AS
 SELECT
   player_name,
   seasons,

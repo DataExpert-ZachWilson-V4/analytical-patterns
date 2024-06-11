@@ -1,6 +1,7 @@
 -- Which player scored the most points in one season?
+-- Answering using GROUPING SETS as requested in the assignment
 
--- Deduplicating the `nba_game_details` table
+-- Deduplicating the `nba_game_details` table because there are duplicates in the source table!
 WITH nba_game_details_deduped AS (
   SELECT
     game_id,
@@ -16,9 +17,7 @@ WITH nba_game_details_deduped AS (
 combined AS (
   SELECT
     gd.game_id,
-    gd.team_id,
     gd.team_abbreviation,
-    gd.player_id,
     gd.player_name,
     gd.pts,
     g.season
@@ -29,18 +28,15 @@ combined AS (
 ),
 olap_cube AS (
   SELECT
-    COALESCE(CAST(team_id AS VARCHAR), '(overall)') AS team,
-    COALESCE(CAST(player_id AS VARCHAR), '(overall)') AS player,
+    COALESCE(CAST(team_abbreviation AS VARCHAR), '(overall)') AS team,
+    COALESCE(CAST(player_name AS VARCHAR), '(overall)') AS player,
     COALESCE(CAST(season AS VARCHAR), '(overall)') AS season,
-    MAX(team_abbreviation) AS team_abbreviation,
-    MAX(player_name) AS player_name,
-    AVG(pts) AS avg_pts,
     SUM(pts) AS sum_pts
   FROM combined
   GROUP BY GROUPING SETS (
-    (player_id, team_id),
-    (player_id, season),
-    (team_id)
+    (player_name, team_abbreviation),
+    (player_name, season),
+    (team_abbreviation)
   )
 )
 SELECT

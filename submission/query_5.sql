@@ -7,6 +7,8 @@ WITH winning_teams AS (
     game_id,
     home_team_id AS team_id
   FROM bootcamp.nba_games
+  -- Filtering on home_team_wins = 1 still brings all games
+  -- while ensuring that one record per game is returned
   WHERE home_team_wins = 1
 )
 SELECT
