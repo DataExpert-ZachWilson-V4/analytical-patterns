@@ -4,7 +4,7 @@ from game_details_grouping
 where aggregation_level='player_name__season'
 group by 1,2
 )
-select player_name
+select player_name,season
 from player_season
 where points=(select max(points) from player_season)
 
