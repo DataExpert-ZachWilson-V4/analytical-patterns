@@ -1,3 +1,5 @@
+--Context: cumulative state change, this is a SQL query to update state for year 1998 given all data prior to 1998 is properly updated
+
 --CTE layers:
 --last_year and this_year: basic components of cumulative queries
 --combined: joining the 2 dataframes to incorporate latest info of players
