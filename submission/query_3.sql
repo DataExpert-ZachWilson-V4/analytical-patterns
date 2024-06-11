@@ -39,4 +39,4 @@ SELECT
     WHERE player <> 'Overall' AND team <> 'Overall'
     GROUP BY team
     ORDER BY max_pts DESC
-    LIMIT
+    LIMIT 1

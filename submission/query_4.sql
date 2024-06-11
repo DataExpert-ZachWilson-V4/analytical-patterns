@@ -36,7 +36,7 @@ SELECT
     , MAX(sum_of_pts) as max_pts
     , MAX_BY(player, sum_of_pts) as player_with_max_pts
     FROM aggregated
-    WHERE season <> '(Overall)'
-    GROUP BY season
+    WHERE season <> '(Overall)' AND team <> '(Overall)'
+    GROUP BY team, season
     ORDER BY max_pts DESC
     LIMIT 1
