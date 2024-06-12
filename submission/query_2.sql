@@ -3,6 +3,11 @@ CREATE OR REPLACE TABLE supreethkabbin.nba_game_grouping AS
 WITH game_details_combined AS (
     SELECT 
         *, 
+        CASE 
+            WHEN visitor_team_id = d.team_id AND home_team_wins = 1 THEN 0
+            WHEN visitor_team_id = d.team_id AND home_team_wins = 0 THEN 1
+            ELSE g.home_team_wins
+        END AS won,
         ROW_NUMBER() OVER(PARTITION BY d.game_id, d.team_id, player_id ORDER BY g.game_date_est) AS row_num
     FROM bootcamp.nba_game_details d
     INNER JOIN bootcamp.nba_games g
@@ -20,7 +25,7 @@ SELECT
     team_abbreviation, 
     season, 
     SUM(pts) AS points, 
-    SUM(home_team_wins) AS game_wins
+    SUM(won) AS game_wins
 FROM game_details_combined
 WHERE row_num = 1
 GROUP BY GROUPING SETS (

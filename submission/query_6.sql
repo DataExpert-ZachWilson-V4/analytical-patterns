@@ -28,8 +28,8 @@ combined AS (
     end AS game_win
     FROM distinct_game_data
 ),
--- CTE to record total wins OVER a 90 day sliding window
-over_90_day_sliding AS (
+-- CTE to record total wins OVER a 90 game sliding window
+over_90_game_sliding AS (
     SELECT 
         team_id, 
         game_date - INTERVAL '90' DAY AS starting,
@@ -40,4 +40,4 @@ over_90_day_sliding AS (
 SELECT 
     MAX_BY(team_id, total_wins) AS team_id,
     MAX(total_wins) AS total_game_wins
-FROM over_90_day_sliding
+FROM over_90_game_sliding

@@ -9,7 +9,9 @@ WITH player_team AS(
         player_name,
         team_abbreviation
     )
-SELECT player_name
+SELECT 
+    player_name,
+    team_abbreviation
 FROM player_team
 WHERE points = (
         SELECT 
