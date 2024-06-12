@@ -12,6 +12,7 @@
 INSERT INTO
   alia.player_state_tracking
 WITH
+--last_season_cte: Retrieves player tracking data for the 1995 season from alia.player_state_tracking.
   last_season_cte AS (
     SELECT
       *
@@ -20,6 +21,7 @@ WITH
     WHERE
       current_season = 1995
   ),
+-- current_season_cte: Gathers player activity data for the 1996 season from bootcamp.nba_players, summarizing the maximum activity status, years since last active, and current active season for each player.
   current_season_cte AS (
     SELECT
       player_name,
@@ -32,6 +34,7 @@ WITH
       current_season = 1996
     group by 1
   ),
+-- combined: Merges data from the previous season (last_season_cte) and the current season (current_season_cte) using a full outer join on player_name. This handles new players, continuing players, and those with changes in activity status.
   combined AS (
     SELECT
       COALESCE(ls.player_name, cs.player_name) AS player_name,
@@ -55,6 +58,12 @@ WITH
       last_season_cte ls
       FULL OUTER JOIN current_season_cte cs ON ls.player_name = cs.player_name
   )
+--The season_active_state is determined based on the player's activity history:
+    -- 'New' for players active for the first time in 1996.
+    -- 'Returned from Retirement' for players who returned after being inactive.
+    -- 'Continued Playing' for players who were active in consecutive seasons.
+    -- 'Retired' for players who retired after the 1995 season.
+    -- 'Stayed Retired' for players who did not return after retiring before 1996.
 SELECT
   player_name,
   first_active_season,
