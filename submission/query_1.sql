@@ -1,4 +1,4 @@
-INSERT into nba_players_track_status 
+INSERT into ameena543246912.nba_players_track_status 
 -- Define the 'yesterday' CTE to capture player data from the 2000 season
 WITH yesterday AS (
     SELECT 
@@ -8,7 +8,7 @@ WITH yesterday AS (
         active_seasons,
         player_state,
         season
-    FROM nba_players_track_status
+    FROM ameena543246912.nba_players_track_status
     WHERE season = 2000
 ),
 
