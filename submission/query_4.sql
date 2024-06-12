@@ -1,4 +1,5 @@
 -- Define common table expressions (CTEs)
+
 WITH
   -- CTE to rank players based on their points within each season
   data_rank AS (
