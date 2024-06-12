@@ -22,7 +22,7 @@ SELECT
   COALESCE(
     IF(T.is_active,T.current_season,NULL),
     L.last_active_season
-  ) AS last_active_season,
+  ) AS last_active_season, -- This cte gives us the last season
   CASE
       WHEN L.seasons_active IS NULL AND T.is_active THEN ARRAY[T.current_season]
       WHEN L.seasons_active IS NOT NULL AND (T.is_active IS NULL OR NOT T.is_active) THEN L.seasons_active
