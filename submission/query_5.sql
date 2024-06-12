@@ -4,7 +4,7 @@ WITH
         SELECT
             team,
             total_games_won,
-            DENSE_RANK() OVER(ORDER BY total_games_won DESC) AS rnk
+            DENSE_RANK() OVER(ORDER BY total_games_won DESC) AS rnk -- get the rank by total_games_won
         FROM
             lsleena.game_agg_details 
         WHERE
