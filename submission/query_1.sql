@@ -1,4 +1,34 @@
 -- This query is used to determine a players state across seasons
+-- The results are saved in ovoxo.nba_players_state_tracking
+-- -- To setup, ovoxo.nba_players_state_tracking is first created and then inserts are run across sequential years
+-- CREATE TABLE ovoxo.nba_players_state_tracking (
+--     player_name varchar, 
+--     height varchar, 
+--     college varchar, 
+--     country varchar, 
+--     draft_year varchar,
+--     draft_round varchar, 
+--     draft_number varchar, 
+--     seasons array(
+--         ROW(season integer, 
+--             age integer, 
+--             weight integer, 
+--             gp integer, 
+--             pts double, 
+--             reb double,
+--             ast double)), 
+--     is_active boolean, 
+--     years_since_last_active integer, 
+--     first_active_season integer,
+--     last_active_season integer,
+--     season_state varchar,
+--     current_season integer
+-- )
+-- WITH (
+--   FORMAT = 'PARQUET',
+--   PARTITIONING = array['current_season']
+-- )
+
 
 WITH
   previous_season AS (

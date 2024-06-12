@@ -1,75 +1,76 @@
 -- Join nba_game_details with nba_games to get all fields in one table
 -- Cast data types as needed
+-- Results presisted in ovoxo.nba_game_details_grouped to be used in later queries
+-- -- Table setup to create ovoxo.nba_game_details_grouped
+-- CREATE TABLE ovoxo.nba_game_details_grouped (
+--     player_name varchar,
+--     team_abbreviation varchar,
+--     season integer,
+--     total_points integer,
+--     total_games_team_won integer,
+--     agg_type varchar
+-- )
+-- WITH (
+--   FORMAT = 'PARQUET',
+--   PARTITIONING = array['season']
+-- )
 
-WITH combined AS (
-    SELECT
-    CAST(g.game_id AS BIGINT) AS game_id,
-    gd.team_id,
-    gd.player_id,
-    gd.team_abbreviation AS team_abbreviation,
-    gd.player_name AS player_name,
-    CASE
-        WHEN CARDINALITY(SPLIT(MIN, ':')) > 1 
-        THEN CAST(
-            CAST(SPLIT(MIN, ':') [1] AS DOUBLE) * 60 + CAST(SPLIT(MIN, ':') [2] AS DOUBLE) AS INTEGER
-        )
-        ELSE CAST(MIN AS INTEGER) 
-    END AS m_seconds_played, 
-    CAST(fgm AS DOUBLE) AS m_field_goals_made,
-    CAST(fga AS DOUBLE) AS m_field_goals_attempted,
-    CAST(fg3m AS DOUBLE) AS m_3_pointers_made,
-    CAST(fg3a AS DOUBLE) AS m_3_pointers_attempted,
-    CAST(ftm AS DOUBLE) AS m_free_throws_made,
-    CAST(fta AS DOUBLE) AS m_free_throws_attempted,
-    CAST(oreb AS DOUBLE) AS m_offensive_rebounds,
-    CAST(dreb AS DOUBLE) AS m_defensive_rebounds,
-    CAST(reb AS DOUBLE) AS m_rebounds,
-    CAST(ast AS DOUBLE) AS m_assists,
-    CAST(stl AS DOUBLE) AS m_steals,
-    CAST(blk AS DOUBLE) AS m_blocks,
-    CAST(TO AS DOUBLE) AS m_turnovers,
-    CAST(pf AS DOUBLE) AS m_personal_fouls,
-    CAST(pts AS DOUBLE) AS m_points,
-    CAST(plus_minus AS DOUBLE) AS m_plus_minus,
-    g.game_date_est AS game_date,
-    g.season AS season,
-    CASE
-        WHEN gd.team_id = g.home_team_id THEN home_team_wins = 1
-        ELSE home_team_wins = 0
-    END AS team_did_win
-    FROM bootcamp.nba_games g -- used nbs_games dataset to get season
-    JOIN bootcamp.nba_game_details gd ON g.game_id = gd.game_id
-)
+WITH 
+    -- add a row number to each row in nba_game_details to be used for deduping
+    nba_game_details_deduped AS (
+        SELECT 
+            *,
+            ROW_NUMBER() OVER (PARTITION BY game_id, team_id, player_id) rn 
+        FROM bootcamp.nba_game_details
+    ),
+
+    combined AS (
+        SELECT
+            gd.team_abbreviation AS team_abbreviation,
+            gd.player_name AS player_name,
+            CAST(pts AS DOUBLE) AS m_points,
+            g.season AS season,
+            CASE 
+                WHEN gd.team_id = g.home_team_id AND g.home_team_wins = 1 THEN 1    -- if tean_id is same as home_team_id and home_team_wins is 1, then team won
+                WHEN gd.team_id = g.visitor_team_id AND g.home_team_wins = 0 THEN 1 -- if team_id is same as visitor_team_id and home_team_wins is 0, then team won
+                ELSE 0
+            END AS dim_team_won, -- determines if a team won or lost
+           ROW_NUMBER() OVER (PARTITION BY gd.game_id,  gd.team_id) AS rn_team_games -- used to dedupe and get total number of games won by each team
+        FROM bootcamp.nba_games g -- used nba_games dataset to get season and determien team win status
+        JOIN nba_game_details_deduped gd ON g.game_id = gd.game_id AND gd.rn = 1
+    ),
+
+    -- This CTE is used to separately determine the total number of games won by each team
+    -- This is done because this metric is not additive on any player related grain.
+    -- For this metric to be determined as part of the grouping sets, we have to include game_id which would still keep the data at player_game level and lead to a bigger table
+    games_won_by_team AS (
+        SELECT team_abbreviation,
+            SUM(dim_team_won) AS total_team_wins -- total team wins across multiple games
+        FROM combined
+        WHERE rn_team_games = 1  -- only include one player record for game and team win
+        GROUP BY team_abbreviation
+    )
 
 -- Aggregate data, Group by combinations of  player, team, and season
+-- agg_type field is used to distinguish between agrregeattions valid for player and team, player and season, and team only
 SELECT COALESCE(player_name, '(all_players)') as player_name,
-    COALESCE(team_abbreviation, '(all_teams)') as team_abbreviation,
+    COALESCE(c.team_abbreviation, '(all_teams)') as team_abbreviation,
     season,
-    SUM(m_field_goals_made) AS total_field_goals_made,
-    SUM(m_field_goals_attempted) AS total_field_goals_attempted,
-    SUM(m_3_pointers_made) AS total_3_pointers_made,
-    SUM(m_3_pointers_attempted) AS total_3_pointers_attempted,
-    SUM(m_free_throws_made) AS total_free_throws_made,
-    SUM(m_free_throws_attempted) AS total_free_throws_attempted,
-    SUM(m_offensive_rebounds) AS total_offensive_rebounds,
-    SUM(m_defensive_rebounds) AS total_defensive_rebounds,
-    SUM(m_rebounds) AS total_rebounds,
-    SUM(m_assists) AS total_assists,
-    SUM(m_steals) AS total_steals,
-    SUM(m_blocks) AS total_blocks,
-    SUM(m_turnovers) AS total_turnovers,
-    SUM(m_personal_fouls) AS total_personal_fouls,
     SUM(m_points) AS total_points,
-    SUM(m_plus_minus) AS total_plus_minus,
     CASE 
-        WHEN player_name != '(all_players)' AND team_abbreviation != '(all_teams)' THEN 'player_team_aggregate' 
-        WHEN player_name != '(all_players)' AND season IS NOT NULL THEN 'player_season_aggregate'
-        WHEN team_abbreviation != '(all_teams)' THEN 'team_aggregate'
+        WHEN COALESCE(c.team_abbreviation, '(all_teams)') = '(all_teams)' THEN NULL -- the total_gameas_team_won is only relevant for teams
+        ELSE MAX(gt.total_team_wins) 
+    END AS total_games_team_won,
+    CASE 
+        WHEN grouping(player_name) = 0 AND grouping(c.team_abbreviation) = 0 and grouping(season) = 1 THEN 'player_team_aggregate' 
+        WHEN grouping(player_name) = 0 AND grouping(c.team_abbreviation) = 1 and grouping(season) = 0 THEN 'player_season_aggregate'
+        WHEN grouping(player_name) = 1 AND grouping(c.team_abbreviation) = 0 and grouping(season) = 1 THEN 'team_aggregate'
     END AS agg_type
-FROM combined
+FROM combined c
+LEFT JOIN games_won_by_team gt ON c.team_abbreviation = gt.team_abbreviation
 GROUP BY 
   GROUPING SETS (
-    (player_name, team_abbreviation),
+    (player_name, c.team_abbreviation),
     (player_name, season),
-    (team_abbreviation)
+    (c.team_abbreviation)
   )
