@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/Cj56l3RT)
 # Applying Analytical Patterns
 
 ## Submission Guidelines
@@ -47,7 +48,8 @@ Your task is to write a total of 4 queries using the `nba_players`,`nba_players_
   - A player that comes out of retirement should be `Returned from Retirement`
   - A player that stays out of the league should be `Stayed Retired`
   
-- Write a query (`query_2`) that uses `GROUPING SETS` to perform aggregations of the `nba_game_details` data. Create slices that aggregate along the following combinations of dimensions:
+- Write a query (`query_2`) that uses `GROUPING SETS` to perform aggregations of the `nba_game_details` data. 
+Create slices that aggregate along the following combinations of dimensions:
   - player and team
   - player and season
   - team
