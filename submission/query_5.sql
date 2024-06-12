@@ -5,4 +5,4 @@ WITH query_5 AS (
     WHERE aggregation_level = 'team'
     ORDER BY won_games DESC
 )
-SELECT * FROM query_5;
+SELECT * FROM query_5

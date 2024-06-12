@@ -1,5 +1,4 @@
 -- In this query we are creating a state change table which captures the current state of the players.
--- for autograder
 
 INSERT INTO sagararora492.nba_players_state_tracking
 WITH last_season AS ( -- this CTE contains data from last season and if this is the first season then the table will be empty
