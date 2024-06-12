@@ -1,5 +1,5 @@
 -- This query is creating grouping sets table as per the assignment instructions and using table nba_game_details_dedup.
--- This table will help in answering other set of queries
+-- This table will help in answering other set of queries in the assignment
 CREATE OR REPLACE TABLE sagararora492.grouping_sets AS
 SELECT
     CASE 
