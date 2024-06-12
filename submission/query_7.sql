@@ -21,18 +21,15 @@ WITH
             CASE 
               WHEN gd.pts > 10 THEN 1 
               ELSE 0
-            END AS scored_10_pts
+            END AS scored_10_pts,
+            LAG(CASE 
+              WHEN gd.pts > 10 THEN 1 
+              ELSE 0
+            END, 1, 0) OVER (PARTITION BY gd.player_name ORDER BY g.game_date_est) AS lagged_streak
         FROM bootcamp.nba_games g 
         JOIN nba_game_details_deduped gd ON g.game_id = gd.game_id AND gd.rn = 1
     ),
     
-    -- find lagged 10_point which would be used to determine streak
-    lagged AS (
-      SELECT *,
-        LAG(scored_10_pts, 1, 0) OVER (PARTITION BY player_name ORDER BY game_date_est) AS lagged_streak
-      FROM combined
-    ),
-  
   streaks AS (
     SELECT *,
         SUM(CASE 
@@ -40,7 +37,7 @@ WITH
                 WHEN scored_10_pts = 1 and lagged_streak = 0 THEN 0 -- if a player scores 10 points and the previous game was not 10 points, then the streak is broken
                 ELSE 1 
             END) OVER (PARTITION BY player_name ORDER BY game_date_est) AS streak_identifier
-    FROM lagged
+    FROM combined
   )
   
 SELECT player_name, 

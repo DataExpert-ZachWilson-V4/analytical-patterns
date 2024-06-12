@@ -30,6 +30,10 @@ WITH
       FROM combined
     )
     
-  SELECT MAX(win_streak_for_90_games) as max_games_won_90_day_stretch
-  FROM streaks
-  
+SELECT team_id, MAX(win_streak_for_90_games) as max_games_won_90_day_stretch
+FROM streaks
+GROUP BY team_id
+ORDER BY max_games_won_90_day_stretch DESC
+LIMIT 1
+
+

@@ -31,8 +31,8 @@ WITH
             CAST(pts AS DOUBLE) AS m_points,
             g.season AS season,
             CASE 
-                WHEN gd.team_id = g.home_team_id AND g.home_team_wins = 1 THEN 1    -- if tean_id is same as home_team_id and home_team_wins is 1, then team won
-                WHEN gd.team_id = g.visitor_team_id AND g.home_team_wins = 0 THEN 1 -- if team_id is same as visitor_team_id and home_team_wins is 0, then team won
+                WHEN gd.team_id = g.home_team_id AND g.home_team_wins = 1 THEN 1    -- team won if team_id matches home_team_id and home_team_wins is 1
+                WHEN gd.team_id = g.visitor_team_id AND g.home_team_wins = 0 THEN 1 -- team won if team_id matches visitor_team_id and home_team_wins is 0
                 ELSE 0
             END AS dim_team_won, -- determines if a team won or lost
            ROW_NUMBER() OVER (PARTITION BY gd.game_id,  gd.team_id) AS rn_team_games -- used to dedupe and get total number of games won by each team
@@ -74,4 +74,3 @@ GROUP BY
     (player_name, season),
     (c.team_abbreviation)
   )
-  
