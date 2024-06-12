@@ -1,4 +1,4 @@
-INSERT into nba_players_state_tracker
+INSERT into supreethkabbin.nba_players_state_tracker
 -- CTE to track 'existing' player data from season 2000
 WITH yesterday AS (
     SELECT 
@@ -8,7 +8,7 @@ WITH yesterday AS (
         active_seasons,
         player_state,
         season
-    FROM nba_players_state_tracker
+    FROM supreethkabbin.nba_players_state_tracker
     WHERE season = 2000
 ),
 
