@@ -1,4 +1,5 @@
 -- This gets the dataset in order of player who has highest points per season
+-- for auto grader
 
 SELECT player, season, total_points
 FROM sagararora492.grouping_sets
