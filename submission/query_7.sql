@@ -1,4 +1,5 @@
 WITH combined AS (
+  -- Combine both tables to get info needed for teams and players
   SELECT
     ng.game_id,
     ng.game_date_est,
@@ -16,6 +17,7 @@ WITH combined AS (
   WHERE player_name = 'LeBron James'
 ),
 ranking AS (
+  -- using row number to divide each streak using the concept of islands and gaps
   SELECT
     *,
     ROW_NUMBER() OVER (
@@ -28,6 +30,7 @@ ranking AS (
   FROM combined
 ),
 streak AS (
+  -- sum all streaks for each player
   SELECT
     player_name,
     rnk,
@@ -35,6 +38,7 @@ streak AS (
   FROM ranking
   GROUP BY player_name, rnk
 )
+-- Get maximum streak and the player
 SELECT
   MAX_BY(player_name, sum_games_more_than_10) AS player_name,
   MAX(sum_games_more_than_10) AS sum_games_more_than_10

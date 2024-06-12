@@ -1,4 +1,5 @@
 WITH combined AS (
+  -- Combine both tables to get info needed for teams and players
   SELECT
     ng.game_id,
     ng.season,
@@ -15,6 +16,7 @@ WITH combined AS (
   INNER JOIN bootcamp.nba_game_details_dedup ngd ON ng.game_id = ngd.game_id
 ),
 aggregated AS (
+  -- Apply aggregations by using grouping sets as needed
   SELECT
     COALESCE(team_name, '(overall)') AS team_name,
     COALESCE(player_name, '(overall)') AS player_name,
@@ -27,6 +29,8 @@ aggregated AS (
     (player_name, season)
   )
 )
+-- Get the maximum points scored for each player in each team
+-- Select the player with the most points whatever the team
 SELECT
   team_name,
   player_name,

@@ -1,4 +1,5 @@
 WITH combined AS (
+  -- Combine both tables to get info needed for teams and players
   SELECT
     ng.game_id,
     ng.season,
@@ -15,11 +16,12 @@ WITH combined AS (
   INNER JOIN bootcamp.nba_game_details_dedup ngd ON ng.game_id = ngd.game_id
 ),
 aggregated AS (
+  -- Apply aggregations by using grouping sets as needed
   SELECT
     COALESCE(team_name, '(overall)') AS team_name,
     COALESCE(player_name, '(overall)') AS player_name,
     COALESCE(season, 0) AS season,
-    SUM(CAST(did_win AS INT)) AS wins
+    SUM(CAST(did_win AS INT)) AS wins -- sum of all wins to get total for each aggregate
   FROM combined
   GROUP BY GROUPING SETS (
     (team_name),
@@ -27,6 +29,8 @@ aggregated AS (
     (player_name, season)
   )
 )
+-- Get the number of wins for each team
+-- Select the team with the most wins
 SELECT
   team_name,
   MAX(wins) AS most_wins

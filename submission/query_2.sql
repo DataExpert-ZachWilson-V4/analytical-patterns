@@ -19,7 +19,9 @@ WITH combined AS (
 SELECT
   COALESCE(team_name, '(overall)') AS team_name,
   COALESCE(player_name, '(overall)') AS player_name,
-  COALESCE(season, 0) AS season
+  COALESCE(season, 0) AS season,
+  SUM(pts) AS total_player_points,  -- sum of total points 
+  SUM(did_win) AS total_team_wins -- sum of total wins
 FROM combined
 GROUP BY GROUPING SETS (
   (team_name),
