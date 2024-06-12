@@ -1,4 +1,5 @@
 -- Insert data into the RaviT.nba_players_track_status table
+
 INSERT INTO RaviT.nba_players_track_status
 
 -- Define common table expressions (CTEs)
