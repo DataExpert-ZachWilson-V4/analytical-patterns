@@ -1,30 +1,33 @@
 -- This query calculates total points scored in NBA games, providing subtotals and overall totals.
-with
-    game_details_cte as (
-        select
+
+WITH
+    -- Combine game details with game metadata, adding season information
+    game_details_cte AS (
+        SELECT
             ngd.*,
             ng.season
-        from
-            -- Join game details with games metadata
-            bootcamp.nba_game_details_dedup ngd -- using pre-deduped table that exist in bootcamp schema
-            inner join bootcamp.nba_games ng on ngd.game_id = ng.game_id
+        FROM
+            bootcamp.nba_game_details_dedup ngd -- Using pre-deduped table that exists in bootcamp schema
+            INNER JOIN bootcamp.nba_games ng ON ngd.game_id = ng.game_id
     ),
-    nba_game_details_dashboard as (
+    
+    -- Aggregate total points and handle nulls for comprehensive dashboard data
+    nba_game_details_dashboard AS (
         SELECT
-            -- Use COALESCE to handle nulls, defaulting to 'Overall' for aggregate rows
-            coalesce(player_name, 'Overall') as player,
-            coalesce(team_abbreviation, 'Overall') as team,
-            coalesce(cast(season as varchar), 'Overall') as season,
+            COALESCE(player_name, 'Overall') AS player,
+            COALESCE(team_abbreviation, 'Overall') AS team,
+            COALESCE(CAST(season AS VARCHAR), 'Overall') AS season,
+            
             -- Sum points, treating nulls as 0
-            sum(
-                case
-                    when pts is null then 0
-                    else pts
-                end
-            ) as total_points
-        from
+            SUM(
+                CASE
+                    WHEN pts IS NULL THEN 0
+                    ELSE pts
+                END
+            ) AS total_points
+        FROM
             game_details_cte
-        group by
+        GROUP BY
             -- Grouping sets to create subtotals for each player, team, and season
             GROUPING SETS (
                 (player_name, team_abbreviation),
@@ -32,24 +35,29 @@ with
                 (team_abbreviation)
             )
     ),
-    nba_game_details_dashboard_without_totals as (
-        select
+    
+    -- Filter to get player-team combinations excluding overall totals
+    nba_game_details_dashboard_player_team_total AS (
+        SELECT
             *
-        from
+        FROM
             nba_game_details_dashboard
-        where
+        WHERE
             team <> 'Overall'
-            and player <> 'Overall'
+            AND player <> 'Overall'
+            AND season = 'Overall'
     )
-select
+    
+-- Select the player with the highest total points and the corresponding team
+SELECT
     player,
-    max(total_points) as max_total_points,
-    max_by(team, total_points) as team
-from
-    nba_game_details_dashboard_without_totals
-group by
-    1
-order by
-    max_total_points desc
-limit
-    1
+    MAX(total_points) AS max_total_points,
+    MAX_BY(team, total_points) AS team
+FROM
+    nba_game_details_dashboard_player_team_total
+GROUP BY
+    player
+ORDER BY
+    max_total_points DESC
+LIMIT
+    1;
