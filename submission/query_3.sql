@@ -60,4 +60,4 @@ GROUP BY
 ORDER BY
     max_total_points DESC
 LIMIT
-    1;
+    1
