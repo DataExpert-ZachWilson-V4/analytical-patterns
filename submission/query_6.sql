@@ -32,3 +32,4 @@ WITH
     
   SELECT MAX(win_streak_for_90_games) as max_games_won_90_day_stretch
   FROM streaks
+  

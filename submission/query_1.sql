@@ -91,3 +91,4 @@ SELECT
     partition_year
 FROM
   combined
+  

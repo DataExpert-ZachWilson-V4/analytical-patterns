@@ -48,6 +48,6 @@ SELECT player_name,
 FROM streaks
 WHERE scored_10_pts = 1
   AND player_name = 'LeBron James'
-GROUP BY player_name, streak_counts
+GROUP BY player_name, streak_identifier
 ORDER BY COUNT(1) DESC
 LIMIT 1
