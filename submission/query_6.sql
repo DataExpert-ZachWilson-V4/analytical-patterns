@@ -7,7 +7,6 @@ WITH distinct_game_data AS (
         visitor_team_id,
         home_team_wins
     FROM bootcamp.nba_games
-   
 ),
 -- CTE to record data combined over deduped data for each team
 combined AS (
@@ -17,16 +16,17 @@ combined AS (
         home_team_wins AS game_win
     FROM distinct_game_data
         
-    union
+    union all
     
     SELECT 
         game_date_est AS game_date,
-        home_team_id AS team_id,
+        visitor_team_id AS team_id,
     CASE 
         WHEN home_team_wins = 0 THEN 1
         WHEN home_team_wins = 1 THEN 0 
     end AS game_win
     FROM distinct_game_data
+    WHERE home_team_wins IS NOT NULL
 ),
 -- CTE to record total wins OVER a 90 game sliding window
 over_90_game_sliding AS (
