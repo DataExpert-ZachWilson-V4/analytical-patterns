@@ -1,4 +1,5 @@
 -- Define common table expressions (CTEs)
+
 WITH
   -- CTE to rank teams based on the total number of games won
   data_rnk AS (
