@@ -48,7 +48,8 @@ Your task is to write a total of 4 queries using the `nba_players`,`nba_players_
   - A player that comes out of retirement should be `Returned from Retirement`
   - A player that stays out of the league should be `Stayed Retired`
   
-- Write a query (`query_2`) that uses `GROUPING SETS` to perform aggregations of the `nba_game_details` data. Create slices that aggregate along the following combinations of dimensions:
+- Write a query (`query_2`) that uses `GROUPING SETS` to perform aggregations of the `nba_game_details` data. 
+Create slices that aggregate along the following combinations of dimensions:
   - player and team
   - player and season
   - team
