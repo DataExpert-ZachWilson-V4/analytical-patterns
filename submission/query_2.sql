@@ -21,9 +21,9 @@ SELECT
         WHEN GROUPING(player_name, season) = 0 THEN 'player_and_season'
         WHEN GROUPING(team_abbreviation) = 0 THEN 'team'
     END as aggregation_level,
-    player_name, 
-    team_abbreviation, 
-    season, 
+    COALESCE(player_name, 'overall') as player_name,
+    COALESCE(team_abbreviation, 'overall') as team_abbreviation,
+    COALESCE(CAST(season AS VARCHAR), 'overall') as season,
     SUM(pts) AS points, 
     SUM(won) AS game_wins
 FROM game_details_combined
