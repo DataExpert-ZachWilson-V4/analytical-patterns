@@ -1,6 +1,6 @@
 WITH previous_year AS (
     SELECT *
-    FROM nba_players_growth_accounting
+    FROM rudnickipm91007.nba_players_growth_accounting
     WHERE year = 1995
 ),
 current_year AS (
