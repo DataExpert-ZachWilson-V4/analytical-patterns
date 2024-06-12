@@ -3,7 +3,7 @@ WITH player_team AS(
         player_name, 
         team_abbreviation,
         SUM(points) as points
-    FROM supreethkabbin.nba_game_grouping
+    FROM supreethkabbin.game_details_dashboard
     WHERE aggregation_level = 'player_and_team'
     GROUP BY 
         player_name,

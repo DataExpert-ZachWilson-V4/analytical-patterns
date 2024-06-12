@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE supreethkabbin.nba_game_grouping AS
+CREATE OR REPLACE TABLE supreethkabbin.game_details_dashboard AS
 -- CTE to record deduped nba game details data
 WITH game_details_combined AS (
     SELECT 

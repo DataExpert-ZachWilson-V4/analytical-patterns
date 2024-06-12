@@ -2,7 +2,7 @@ WITH team_wins AS(
     SELECT 
         team_abbreviation,
         sum(game_wins) AS game_wins
-    FROM supreethkabbin.nba_game_grouping
+    FROM supreethkabbin.game_details_dashboard
     WHERE aggregation_level = 'player_and_team'
     group by 
         team_abbreviation
