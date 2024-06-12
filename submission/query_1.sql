@@ -7,7 +7,7 @@ WITH last_season AS ( -- this CTE contains data from last season and if this is 
 this_season AS ( -- this cte contains data from the current season.
     SELECT DISTINCT
            player_name,
-           is_active,
+           COALESCE(is_active, false) as is_active,
            current_season
     FROM bootcamp.nba_players 
     WHERE current_season = 1996
@@ -46,6 +46,6 @@ SELECT
       WHEN season - last_active_season_previous = 1 AND NOT is_active THEN 'Retired'
       WHEN season - last_active_season_previous > 1 AND is_active THEN 'Returned from Retirement'
       ELSE 'Stayed Retired' -- this is the current status of the player
-  END AS player_state,
+  END AS yearly_active_state,
   season
 FROM combined
