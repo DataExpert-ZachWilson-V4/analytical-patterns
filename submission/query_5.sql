@@ -16,7 +16,7 @@ WITH combined AS (
   INNER JOIN bootcamp.nba_game_details_dedup ngd ON ng.game_id = ngd.game_id
 ),
 aggregated AS (
-  -- Apply aggregations by using grouping sets as needed
+  -- Apply aggregations by using grouping sets as needed 
   SELECT
     COALESCE(team_name, '(overall)') AS team_name,
     COALESCE(player_name, '(overall)') AS player_name,

@@ -30,7 +30,7 @@ ranking AS (
   FROM combined
 ),
 streak AS (
-  -- sum all streaks for each player
+  -- sum all streaks for each player 
   SELECT
     player_name,
     rnk,

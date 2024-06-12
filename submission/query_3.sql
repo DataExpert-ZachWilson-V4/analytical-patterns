@@ -30,7 +30,7 @@ aggregated AS (
   )
 )
 -- Get the maximum points scored for each player in each team
--- Select the player with the most points whatever the team
+-- Select the player with the most points whatever the team 
 SELECT
   team_name,
   player_name,
