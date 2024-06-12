@@ -1,4 +1,5 @@
 -- Create or replace the table RaviT.grouping_sets
+
 CREATE OR REPLACE TABLE RaviT.grouping_sets AS
 
 -- Define common table expressions (CTEs)
