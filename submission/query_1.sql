@@ -1,18 +1,3 @@
---Step 1
-CREATE OR REPLACE TABLE dswills94.nba_players_growth_accounting ( --used to track nba player state by season
-	player_name VARCHAR, --name of nba player being tracked
-	first_active_season INTEGER, --first season active of nba player
-	last_active_season INTEGER, --last season active of nba player
-	seasons_active ARRAY(INTEGER), --array of row of nba player active season
-	seasonal_active_state VARCHAR, --state of nba player by season
-	season INTEGER --season used in analysis
-)
-WITH (
-	format = 'PARQUET', --standard format to handle large datasets
-	partitioning = ARRAY['season'] --temporal analysis by season array
-)
-
---Step 2
 INSERT INTO dswills94.nba_players_growth_accounting
 WITH last_season AS ( --create CTE to pull last season data
 	SELECT * FROM dswills94.nba_players_growth_accounting
