@@ -11,7 +11,7 @@ WITH grouping_sets as (
             (team_abbreviation)
         )
 )
-SELECT player_name
+SELECT player_name, season, pts
 FROM grouping_sets
 WHERE season <> 'OVERALL'
     AND player_name <> 'OVERALL'

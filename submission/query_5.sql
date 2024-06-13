@@ -18,7 +18,7 @@ WITH grouping_sets as (
             (team_abbreviation)
         )
 )
-SELECT team_abbreviation
+SELECT team_abbreviation, team_won
 FROM grouping_sets
 WHERE season = 'OVERALL'
     AND player_name = 'OVERALL'
