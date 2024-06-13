@@ -14,4 +14,4 @@ SELECT
 FROM lebron_james_games
 WHERE row_num_dedup = 1
 ORDER BY num_games DESC
-LIMIT 1;
+LIMIT 1
