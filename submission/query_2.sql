@@ -6,7 +6,7 @@ WITH
     deduped_data AS (
         SELECT 
             ngd.player_name,
-            ndg.pts,
+            ngd.pts,
             ngd.team_abbreviation AS team_name,
             ng.game_date_est,
             ng.season,
