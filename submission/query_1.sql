@@ -10,7 +10,8 @@
 */
 
 --Table creation/schema
-/* CREATE OR REPLACE TABLE harathi.nba_players_state_track(
+/* 
+CREATE OR REPLACE TABLE harathi.nba_players_state_track(
     player_name VARCHAR,
     first_active_season INT,
     last_active_season INT,
@@ -19,7 +20,9 @@
     season INT
 )
 WITH
-    (format = 'PARQUET', partitioning = ARRAY['season']) */
+    (format = 'PARQUET', partitioning = ARRAY['season']) 
+    
+*/
 
 INSERT INTO harathi.nba_players_state_track
 WITH

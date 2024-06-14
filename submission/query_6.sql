@@ -5,6 +5,7 @@
 
 */
 
+
 WITH game_deduped AS (
   SELECT
     game_id,

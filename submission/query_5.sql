@@ -8,6 +8,7 @@
 
 */
 
+
 SELECT team, won_games
 FROM harathi.nba_games_details_board
 WHERE aggregation_level = 'team'

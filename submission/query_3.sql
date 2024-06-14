@@ -6,6 +6,7 @@
 
 */
 
+
 SELECT player, team, total_points
 FROM harathi.nba_games_details_board
 WHERE aggregation_level = 'player_and_team' 

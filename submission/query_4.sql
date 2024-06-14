@@ -7,7 +7,6 @@
 
 */
 
-
 SELECT player, season, total_points
 FROM harathi.nba_games_details_board
 WHERE aggregation_level = 'player_and_season'

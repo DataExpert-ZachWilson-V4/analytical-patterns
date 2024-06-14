@@ -5,6 +5,8 @@
   - team
 
 */
+
+
 CREATE OR REPLACE TABLE harathi.nba_games_details_board AS
 SELECT
     CASE 
