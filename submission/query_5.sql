@@ -1,19 +1,23 @@
---
--- Query 5: Which team has won the most games?
---
--- team_abbreviation	max_wins
--- SAS	                1182
---
+-- Which team has won the most games?
+-- This question doesn't require a GROUPING SETS query.
+-- The following simple query should suffice: 
 
+WITH winning_teams AS (
+  SELECT
+    game_id,
+    home_team_id AS team_id
+  FROM bootcamp.nba_games
+  -- Filtering on home_team_wins = 1 still brings all games
+  -- while ensuring that one record per game is returned
+  WHERE home_team_wins = 1
+)
 SELECT
-    team_abbreviation,
-    MAX(team_wins) AS max_wins
+  team_id,
+  COUNT(game_id) AS games_won
 FROM
-    vzucher.nba_grouping_sets
-WHERE
-    aggregation_level = 'team'
+  winning_teams
 GROUP BY
-    team_abbreviation
+  team_id
 ORDER BY
-    max_wins DESC
+  COUNT(game_id) DESC
 LIMIT 1
