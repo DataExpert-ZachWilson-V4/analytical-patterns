@@ -95,7 +95,7 @@ Combined as(
     Select *,
     active_season - First_Active_Season as active_season_diff_first,
     active_season - last_active_last_season as active_season_diff_last,
-    partitions_season - last_active_season as Partition_season_diff_last
+    partition_season - last_active_season as Partition_season_diff_last
     FROM combined
   )
   
