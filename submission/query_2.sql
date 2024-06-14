@@ -1,3 +1,5 @@
+CREATE
+OR REPLACE TABLE ebrunt.game_details_dashboard AS
 WITH
   games AS (
     SELECT
