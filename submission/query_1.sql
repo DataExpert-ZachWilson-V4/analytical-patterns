@@ -76,3 +76,5 @@ SELECT
     season
 FROM
     combined
+
+--end
