@@ -6,7 +6,7 @@
 
 */
 
-
+-- query from the dashboard dataset created in Query 2
 SELECT player, team, total_points
 FROM harathi.nba_games_details_board
 WHERE aggregation_level = 'player_and_team' 

@@ -8,8 +8,9 @@ Write a query (`query_1`) that does state change tracking for `nba_players`. Cre
   
 */
 
---Table creation/schema
 /* 
+Table creation/schema
+
 CREATE OR REPLACE TABLE harathi.nba_players_state_track(
     player_name VARCHAR,
     first_active_season INT,

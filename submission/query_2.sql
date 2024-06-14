@@ -6,7 +6,7 @@ Write a query (`query_2`) that uses `GROUPING SETS` to perform aggregations of t
 
 */
 
-
+-- CTAS to create a dataset for dashboard analytics
 CREATE OR REPLACE TABLE harathi.nba_games_details_board AS
 SELECT
     CASE 

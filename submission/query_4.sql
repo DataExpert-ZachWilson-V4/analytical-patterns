@@ -6,6 +6,7 @@ Build additional queries on top of the results of the `GROUPING SETS` aggregatio
 
 */
 
+-- query from the dashboard dataset created in Query 2
 SELECT player, season, total_points
 FROM harathi.nba_games_details_board
 WHERE aggregation_level = 'player_and_season'
