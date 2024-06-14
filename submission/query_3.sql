@@ -1,5 +1,5 @@
 WITH combined AS (
-  -- Combine both tables to get info needed for teams and players
+  -- Combine both tables to get info needed for teams and players 
   SELECT
     ngd.team_abbreviation AS team_name,
     ngd.player_name,

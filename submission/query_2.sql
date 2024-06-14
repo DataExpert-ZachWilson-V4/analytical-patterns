@@ -1,5 +1,5 @@
 WITH combined AS (
-  -- Combine both tables to get info needed for teams and players
+  -- Combine both tables to get info needed for teams and players 
   SELECT
     ng.game_id,
     ng.season,
