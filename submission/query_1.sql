@@ -30,7 +30,7 @@ next CTE will get next increment data and set up for combined and logic
 
 CTE_current_season as (
   SELECT
-    Player_name
+    Player_name,
     max(is_active) as is_active,
     max(years_since_last_active) as years_since_last_active,
     max(current_season) as active_season
