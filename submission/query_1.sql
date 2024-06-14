@@ -62,6 +62,7 @@ final as (
         then 'Retired'
       else 'Stayed Retired'
     end as yearly_active_state,
+    
     season
   from combined
 )
