@@ -18,7 +18,7 @@ SELECT
 
 -- Null handling
 
-    COALESCE(gdd.player_namem 'Overall') as player_name,
+    COALESCE(gdd.player_name, 'Overall') as player_name,
     COALESCE(gdd.team_abbreviation, 'Overall') as team,
     COALESCE(Cast(g.season as VARCHAR), 'Overall') as season,
 -- aggregate points and games won
@@ -41,7 +41,7 @@ FROM
     JOIN bootcamp.nba_games as g on gdd.game_id = g.game_id
 GROUP BY
     GROUPING SETS(
-        (gdd.player_name, gdd.team_abbreciation),
+        (gdd.player_name, gdd.team_abbreviation),
         (gdd.player_name, g.season),
         (gdd.team_abbreviation)
     )
