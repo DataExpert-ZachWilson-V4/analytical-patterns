@@ -1,10 +1,11 @@
---Obtain data from previous_year query
+--Obtain data from previous_year 
 
 WITH previous_year AS (
     SELECT *
     FROM grisreyesrios.nba_players_state_tracking
     WHERE year = 1995
 ),
+--current year data
 current_year AS (
     SELECT player_name,
         MAX(current_season) AS active_year
