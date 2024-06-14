@@ -15,7 +15,6 @@ LIMIT 1
 
 /* 
 Result: LeBron James
-
 player	        team	total_points
 LeBron James	CLE	    28314 
 */
