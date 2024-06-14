@@ -14,6 +14,7 @@ current_year AS (
         AND current_season = 1996
     GROUP BY player_name
 ),
+--combined
 combined AS (
     SELECT COALESCE(y.player_name, t.player_name) AS player_name,
         COALESCE(y.first_active_year, t.active_year) AS first_active_year,
