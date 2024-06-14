@@ -1,5 +1,3 @@
-CREATE
-OR REPLACE TABLE ebrunt.game_details_dashboard AS
 WITH
   games AS (
     SELECT
@@ -29,6 +27,11 @@ WITH
       JOIN games ON games.game_id = nba_game_details_dedup.game_id
   )
 SELECT
+  CASE
+    WHEN GROUPING (player, team) = 0 THEN 'player_team'
+    WHEN GROUPING (player, season) = 0 THEN 'player_season'
+    WHEN GROUPING (team) = 0 THEN 'team'
+  END AS aggregation_level,
   COALESCE(player, 'overall') AS player,
   COALESCE(CAST(season AS varchar), 'overall') AS season,
   COALESCE(team, 'overall') AS team,
