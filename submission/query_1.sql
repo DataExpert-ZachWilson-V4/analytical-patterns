@@ -1,4 +1,4 @@
---Obtain data from previous_year
+--Obtain data from previous_year query
 
 WITH previous_year AS (
     SELECT *
