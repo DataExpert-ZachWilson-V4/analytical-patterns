@@ -60,7 +60,7 @@ Combined as(
         end as active_season,
     CASE
         WHEN cls.Seasons_active is NULL Then ARRAY[ccs.active_season]
-        WHEN ccs.active_season is NULL of ccs.is_active = FALSE THEN cls.Seasons_active
+        WHEN ccs.active_season is NULL or ccs.is_active = FALSE THEN cls.Seasons_active
         ELSE cls.Seasons_active || ARRAY[ccs.active_season]
         END as Seasons_active,
       2001 as Partition_season
