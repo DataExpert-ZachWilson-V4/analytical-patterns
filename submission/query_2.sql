@@ -1,5 +1,5 @@
 --Create table to perform aggregations of the nba_game_detials
-create or replace table grisreyesrios.nba_game_details_aggregations as 
+create or replace table grisreyesrios.nba_game_details_aggregations as (
 select     
     coalesce(gd.player_name, 'Overall') as player,
     coalesce(gd.team_abbreviation, 'Overall') as team,
@@ -24,4 +24,4 @@ group by grouping sets(
     (player_name, team_abbreviation),
     (player_name, season),
     (team_abbreviation)
-)
+))

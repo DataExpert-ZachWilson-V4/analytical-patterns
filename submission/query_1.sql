@@ -1,4 +1,5 @@
 --Obtain data from previous_year 
+create or replace table grisreyesrios.nba_game_details_aggregations as (
 
 WITH previous_year AS (
     SELECT *
@@ -44,3 +45,4 @@ SELECT player_name,
     END AS active_state,
     partition_year
 FROM combined
+)
