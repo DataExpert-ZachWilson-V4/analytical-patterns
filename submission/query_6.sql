@@ -8,7 +8,7 @@ WITH combined AS (
     CASE
       WHEN ngd.team_id = ng.home_team_id THEN ng.home_team_wins = 1 -- Assign 1 if the team is the home team and they won
       WHEN ngd.team_id = ng.visitor_team_id THEN ng.home_team_wins = 0  -- Assign 0 if the team is the visitor team and they lost
-    END AS did_win  -- Calculated field indicating if the player's team won
+    END AS did_win, -- Calculated field indicating if the player's team won
     -- Get row number for each game and team
     ROW_NUMBER() OVER (
         PARTITION BY ng.game_id, ngd.team_id -- Partition by game ID and team ID
