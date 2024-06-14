@@ -1,10 +1,12 @@
 /*
-- Write a query (`query_2`) that uses `GROUPING SETS` to perform aggregations of the `nba_game_details` data. Create slices that aggregate along the following combinations of dimensions:
+Write a query (`query_2`) that uses `GROUPING SETS` to perform aggregations of the `nba_game_details` data. Create slices that aggregate along the following combinations of dimensions:
   - player and team
   - player and season
   - team
 
 */
+
+-- CTAS to create a dataset for dashboard analytics
 CREATE OR REPLACE TABLE harathi.nba_games_details_board AS
 SELECT
     CASE 

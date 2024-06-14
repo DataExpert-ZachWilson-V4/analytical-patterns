@@ -1,6 +1,5 @@
 /*
-
-- Write a query (`query_1`) that does state change tracking for `nba_players`. Create a state change-tracking field that takes on the following values:
+Write a query (`query_1`) that does state change tracking for `nba_players`. Create a state change-tracking field that takes on the following values:
   - A player entering the league should be `New`
   - A player leaving the league should be `Retired`
   - A player staying in the league should be `Continued Playing`
@@ -9,8 +8,10 @@
   
 */
 
---Table creation/schema
-/* CREATE OR REPLACE TABLE harathi.nba_players_state_track(
+/* 
+Table creation/schema
+
+CREATE OR REPLACE TABLE harathi.nba_players_state_track(
     player_name VARCHAR,
     first_active_season INT,
     last_active_season INT,
@@ -19,7 +20,9 @@
     season INT
 )
 WITH
-    (format = 'PARQUET', partitioning = ARRAY['season']) */
+    (format = 'PARQUET', partitioning = ARRAY['season']) 
+    
+*/
 
 INSERT INTO harathi.nba_players_state_track
 WITH
@@ -73,3 +76,5 @@ SELECT
     season
 FROM
     combined
+
+--end

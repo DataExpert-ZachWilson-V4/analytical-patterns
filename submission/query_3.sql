@@ -6,6 +6,7 @@
 
 */
 
+-- query from the dashboard dataset created in Query 2
 SELECT player, team, total_points
 FROM harathi.nba_games_details_board
 WHERE aggregation_level = 'player_and_team' 
@@ -14,7 +15,6 @@ LIMIT 1
 
 /* 
 Result: LeBron James
-
 player	        team	total_points
 LeBron James	CLE	    28314 
 */

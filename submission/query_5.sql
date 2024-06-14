@@ -8,6 +8,7 @@
 
 */
 
+-- query from the dashboard dataset created in Query 2
 SELECT team, won_games
 FROM harathi.nba_games_details_board
 WHERE aggregation_level = 'team'
@@ -16,7 +17,6 @@ LIMIT 1
 
 /*
 Result : SAS (Spurs)
-
 team	won_games
 SAS	    14881
 */
