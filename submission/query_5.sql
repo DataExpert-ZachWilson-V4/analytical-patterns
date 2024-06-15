@@ -1,3 +1,5 @@
+--Team that has won the most games
+
 WITH team_wins_max AS
 (
 SELECT 
