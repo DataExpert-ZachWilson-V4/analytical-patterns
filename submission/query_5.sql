@@ -5,7 +5,7 @@ WITH teams_ranked_by_wins AS
 SELECT 
   team,
   team_wins,
-  Dense_Rank() OVER(ORDER BY team_wins DESC) AS rnk 
+  DENSE_RANK() OVER(ORDER BY team_wins DESC) AS rnk 
 FROM hdamerla.nba_grouping_sets WHERE 
 aggregation_level = 'Team'
 )
