@@ -1,4 +1,4 @@
--- Create a temporary table of players, seasons, and total points, ranked by total points
+-- Query_4: Create a temporary table of players, seasons, and total points, ranked by total points
 WITH player_season_maxpoints AS
 (
 SELECT 
