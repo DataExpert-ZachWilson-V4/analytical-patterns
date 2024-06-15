@@ -39,6 +39,8 @@ SELECT player_name
      , total_points
      , ROW_NUMBER() OVER(ORDER BY total_points DESC) AS row_cnt
 FROM grouped_sets
+-- filter for the grouping set where records are grouped by season and player
+-- team is not considered in the group and hence is rolled up at overall level
 WHERE season != 'total'
 AND team_id = 'total'
 AND player_name != 'total'
