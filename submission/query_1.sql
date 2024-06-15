@@ -1,4 +1,3 @@
-INSERT into saidaggupati.nba_players_tracking
 --previous day CTE
 
 WITH prior_day AS (
@@ -9,7 +8,7 @@ WITH prior_day AS (
         active_season,
         player_state, -- needed this for the assignment
         season
-FROM saidaggupati.nba_players_tracking
+FROM bootcamp.nba_players
 WHERE season = 1995
 ),
 
