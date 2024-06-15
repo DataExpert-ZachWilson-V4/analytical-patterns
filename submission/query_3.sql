@@ -1,4 +1,4 @@
----- Create a CTE that ranks players by total points scored for a team
+---- query_3: Create a CTE that ranks players by total points scored for a team
 
 WITH player_team_maxpoints AS
 (
