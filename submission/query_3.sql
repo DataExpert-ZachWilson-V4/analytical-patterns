@@ -5,7 +5,7 @@ WITH player_team_maxpoints AS
 SELECT 
  *,
   -- Rank players by total points in descending order
-  Dense_Rank() OVER(ORDER BY total_points DESC) AS rnk 
+  DENSE_RANK() OVER(ORDER BY total_points DESC) AS rnk 
 FROM hdamerla.nba_grouping_sets WHERE aggregation_level = 'Player_Team'
   AND total_points IS NOT NULL
 )
