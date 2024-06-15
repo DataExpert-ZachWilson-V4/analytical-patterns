@@ -88,17 +88,19 @@ select
 
     -- player's state change
     case
-        -- no prev records; appear in this season
+        -- no prev records; appear in this current year
         when ts.season is not NULL and ls.seasons is NULL
             then 'new'
-        -- has prev records; but does not appear this season
+        -- has prev year record; but does not appear this current year
         when ls.seasons[1][1] = ls.current_season and ts.season is NULL
             then 'retired'
-        -- has prev records; appears this season
+        -- has prev year record; appears this current year
         when ls.seasons[1][1] = ls.current_season and ts.season is not NULL
             then 'continued_playing'
+        --appears this season; prev year record is older than prev year
         when ts.season is not NULL and ls.seasons[1][1] < ls.current_season
             then 'returned_from_retirement'
+        --does not appear this season; prev year record is older than prev year
         when ls.seasons[1][1] < ls.current_season and ts.season is NULL
             then 'stayed_retired'
     end as state_change
