@@ -7,7 +7,7 @@ SELECT
   team_wins,
   DENSE_RANK() OVER(ORDER BY team_wins DESC) AS rnk 
 FROM hdamerla.nba_grouping_sets WHERE 
-aggregation_level = 'Team'
+aggregation_level = 'Team' and team_wins is not null
 )
 SELECT 
   team,
