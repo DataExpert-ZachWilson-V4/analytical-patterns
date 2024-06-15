@@ -6,8 +6,9 @@
 --
 select
     team_abbreviation,
-    MAX(team_wins) AS max_wins
+    MAX(team_wins) as max_wins
 from shabab.nba_grouping_sets where aggregation_level = 'team'
 group by team_abbreviation
 order by max_wins desc
 limit 1
+

@@ -7,7 +7,7 @@
 select
     player_name,
     season,
-    MAX(total_points) AS max_points
+    MAX(total_points) as max_points
 from shabab.nba_grouping_sets where aggregation_level = 'player_season'
 group by player_name, season
 order by max_points desc
