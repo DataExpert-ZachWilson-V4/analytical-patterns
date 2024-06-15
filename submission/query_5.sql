@@ -1,9 +1,10 @@
 --Team that has won the most games
 
-WITH team_wins_max AS
+WITH teams_ranked_by_wins AS
 (
 SELECT 
-  *,
+  team,
+  team_wins,
   Dense_Rank() OVER(ORDER BY team_wins DESC) AS rnk 
 FROM hdamerla.nba_grouping_sets WHERE 
 aggregation_level = 'Team'
@@ -11,4 +12,4 @@ aggregation_level = 'Team'
 SELECT 
   team,
   team_wins
-FROM team_wins_max WHERE rnk = 1
+FROM teams_ranked_by_wins WHERE rnk = 1
