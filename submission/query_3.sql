@@ -4,7 +4,7 @@ WITH player_team_maxpoints AS
 (
 SELECT 
  *,
-  -- Rank players by total points in descending order
+  -- Rank players by total points in descending order. The player with the most points will have a rank of 1.
   DENSE_RANK() OVER(ORDER BY total_points DESC) AS rnk 
 FROM hdamerla.nba_grouping_sets WHERE aggregation_level = 'Player_Team'
   AND total_points IS NOT NULL
@@ -14,4 +14,4 @@ SELECT
   player,
   Team,
   total_points
-FROM player_team_maxpoints WHERE rnk = 1
+FROM player_team_maxpoints WHERE rnk = 1 AND total_points IS NOT NULL
