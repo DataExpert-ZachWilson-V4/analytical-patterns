@@ -9,7 +9,7 @@ WHERE aggregation_level = 'Player_Season' AND total_points IS NOT NULL
 )
 -- Select the player and season with the highest total points
 SELECT 
-  player_name,
+  player
   season,
   total_player_points
 FROM player_season_maxpoints 
