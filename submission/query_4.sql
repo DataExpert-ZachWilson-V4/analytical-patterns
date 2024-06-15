@@ -14,3 +14,4 @@ WHERE
     WHERE
       aggregation_level = 'player_season'
   )
+

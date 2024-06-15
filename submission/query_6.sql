@@ -78,3 +78,4 @@ FROM
   FINAL
 WHERE
   RANK = 1
+

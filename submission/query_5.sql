@@ -13,3 +13,4 @@ WHERE
     WHERE
       aggregation_level = 'team'
   )
+
