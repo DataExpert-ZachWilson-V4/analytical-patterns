@@ -1,4 +1,5 @@
---Team that has won the most games
+---- This query is to find the team(s) with the most wins
+
 
 WITH teams_ranked_by_wins AS
 (
@@ -9,6 +10,8 @@ SELECT
 FROM hdamerla.nba_grouping_sets WHERE 
 aggregation_level = 'Team' and team_wins is not null
 )
+
+---- Modify the final SELECT to return all teams with the highest number of wins
 SELECT 
   team,
   team_wins
