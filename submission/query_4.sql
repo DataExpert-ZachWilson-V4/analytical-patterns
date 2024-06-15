@@ -11,6 +11,6 @@ WHERE aggregation_level = 'Player_Season' AND total_points IS NOT NULL
 SELECT 
   player
   season,
-  total_player_points
+  total_points
 FROM player_season_maxpoints 
 WHERE ranking = 1
