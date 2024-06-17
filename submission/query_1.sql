@@ -1,10 +1,10 @@
-CREATE TABLE farahakoum199912722.nba_players_state_tracking (
-  player_name VARCHAR,
-  first_active_season INTEGER,
-  last_active_season INTEGER,
-  season_active_state VARCHAR,
-  current_season INTEGER
-) WITH (FORMAT = 'PARQUET', partitioning = ARRAY['season'])
+-- CREATE TABLE farahakoum199912722.nba_players_state_tracking (
+--   player_name VARCHAR,
+--   first_active_season INTEGER,
+--   last_active_season INTEGER,
+--   season_active_state VARCHAR,
+--   current_season INTEGER
+-- ) WITH (FORMAT = 'PARQUET', partitioning = ARRAY['season'])
 
 WITH yesterday AS (SELECT *
                    FROM farahakoum199912722.nba_players_state_tracking
