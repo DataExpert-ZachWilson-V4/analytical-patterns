@@ -1,6 +1,8 @@
 --   use a window function on nba_game_details to answer 
 --   the question: "What is the most games a single 
 --   team has won in a given 90-game stretch?"
+--
+
 WITH nba_games_data AS (
 SELECT DISTINCT
     -- Distinct game, team

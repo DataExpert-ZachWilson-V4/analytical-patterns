@@ -5,6 +5,8 @@
 --    player and team
 --    player and season
 --    team
+--
+
 CREATE OR REPLACE TABLE jimmybrock65656.grouping_sets_nba AS
 SELECT
     CASE 

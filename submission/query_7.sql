@@ -1,4 +1,6 @@
---How many games in a row did LeBron James score over 10 points a game?
+-- How many games in a row did LeBron James score over 10 points a game?
+--
+
 with games as (
     -- take details from games and game_details for player name LeBron James ande filter out with pts >0
     select distinct ng.game_date_est,
