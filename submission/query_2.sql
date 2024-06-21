@@ -24,6 +24,7 @@ SELECT
     COALESCE(CAST(g.season AS VARCHAR), 'Overall') AS season,
     -- total points
     SUM(pts) AS total_points,
+    -- total wins home and visitor
     SUM(
      IF(
        (team_id = home_team_id AND home_team_wins = 1)

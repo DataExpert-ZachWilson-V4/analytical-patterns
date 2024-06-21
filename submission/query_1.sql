@@ -1,7 +1,5 @@
---  ???
 --  state change tracking for NBA players
 --  between 1995 and 1996
-
 INSERT INTO jimmybrock65656.nba_players_state_tracking
 WITH last AS (
     -- last season results, 
@@ -18,6 +16,7 @@ this AS (
            current_season
     FROM bootcamp.nba_players
     WHERE current_season = 1996
+    AND is_active IS NOT NULL
 )
 ,combined AS (
 -- combined data from last season and this season

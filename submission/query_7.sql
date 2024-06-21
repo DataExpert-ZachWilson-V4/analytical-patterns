@@ -1,6 +1,5 @@
 -- How many games in a row did LeBron James score over 10 points a game?
 --
-
 with games as (
     -- take details from games and game_details for player name LeBron James ande filter out with pts >0
     select distinct ng.game_date_est,
@@ -31,6 +30,7 @@ streaks as ( -- calculate the streak id
     sum(case when did_10 != prev_did_10 then 1 else 0 end) over (partition by player_id order by game_date_est) as streak_id 
 
     from lag_data 
+    and pts is not null
 ),
 streak_length as ( -- calculate streak length 
     select player_id, 
