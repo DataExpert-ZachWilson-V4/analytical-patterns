@@ -1,5 +1,6 @@
 -- Which player scored the most points 
 -- playing for a single team?
+
 SELECT  player AS player_name, 
         team AS team_name, 
         total_points AS  total_player_points

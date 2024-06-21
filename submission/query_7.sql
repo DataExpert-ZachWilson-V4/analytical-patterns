@@ -28,9 +28,8 @@ streaks as ( -- calculate the streak id
     pts,
     did_10,
     sum(case when did_10 != prev_did_10 then 1 else 0 end) over (partition by player_id order by game_date_est) as streak_id 
-
     from lag_data 
-    and pts is not null
+    where pts is not null
 ),
 streak_length as ( -- calculate streak length 
     select player_id, 
