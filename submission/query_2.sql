@@ -1,7 +1,6 @@
---Query to froup nba game details into grouped sets by players name, team and 
+--Query to group nba game details into grouped sets by players name, team and session
 CREATE OR REPLACE TABLE amaliah21315.nba_game_details_grouped AS WITH combined AS (
-        SELECT COALESCE(gmdt.player_name, 'N/A') AS player_name,
-            -- set null player name to N/A
+        SELECT COALESCE(gmdt.player_name, 'N/A') AS player_name,-- set null player name to N/A
             COALESCE(gmdt.team_abbreviation, 'N/A') AS team_abbreviation,
             COALESCE(CAST(g.season AS Varchar), 'N/A') AS season,
             gmdt.ftm as free_throws_made,
@@ -20,14 +19,11 @@ SELECT COALESCE(player_name, '(overall)') AS player_name,
     SUM(free_throws_made) as free_throws_made,
     SUM(field_goals_made) as field_goals_made,
     SUM(points) as total_points,
-    SUM(IF(team_won = true, 1, 0)) as games_won,
-    -- Calculate games won
-    SUM(IF(team_won = false, 1, 0)) as games_lost,
-    --Calculate gamaes lost
+    SUM(IF(team_won = true, 1, 0)) as total_games_won,-- Calculate games won
+    SUM(IF(team_won = false, 1, 0)) as total_games_lost,--Calculate gamaes lost
     SUM(IF(team_won = true, 1, 0)) * 100.0 / (
         SUM(IF(team_won = true, 1, 0)) + SUM(IF(team_won = false, 1, 0))
-    ) AS percentage_won,
-    -- Calculate percentage of games won
+    ) AS percentage_won, -- Calculate percentage of games won
     CASE
         WHEN GROUPING(player_name, team_abbreviation) = 0 THEN 'player_team'
         WHEN GROUPING(player_name, season) = 0 THEN 'player_season'
