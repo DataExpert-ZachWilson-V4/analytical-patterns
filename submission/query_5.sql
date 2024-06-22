@@ -17,4 +17,4 @@ FROM
 WHERE
     grouping_category = 'team_only' -- selects category by teams only
 ORDER BY
-    total_games_won DESC;
+    total_games_won DESC
