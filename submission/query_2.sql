@@ -34,4 +34,4 @@ GROUP BY GROUPING SETS (
         (player_name, team_abbreviation),
         (player_name, season),
         (team_abbreviation)
-    )
+    ) 

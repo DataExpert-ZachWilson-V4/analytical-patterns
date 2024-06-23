@@ -34,4 +34,4 @@ FROM
 GROUP BY
     team_abbreviation
 ORDER BY 2 DESC
-LIMIT 1
+LIMIT 1 

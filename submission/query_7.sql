@@ -41,4 +41,4 @@ SELECT
 FROM
     consecutive_games
 GROUP BY
-    player_name
+    player_name 

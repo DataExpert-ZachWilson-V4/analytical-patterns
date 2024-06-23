@@ -10,4 +10,4 @@ WHERE
     AND total_points IS NOT NULL --excludes unnecessary records where there are no points
 ORDER BY
     total_points DESC
-LIMIT 1 -- selects the top player
+LIMIT 1 -- selects the top player 
