@@ -9,7 +9,7 @@ WITH player_status AS (
         LAG(is_active) OVER (PARTITION BY player_name ORDER BY start_season) AS prev_is_active, --uses lag to get the previous is active record
         LAG(end_season) OVER (PARTITION BY player_name ORDER BY start_season) AS prev_end_season --uses lag to get the previous start season
     FROM
-        amaliah21315.nba_player_scd
+        amaliah21315.nba_player_scd --reusing existing slowly changing dimension table to prevent duplicating logic
 ),
 state_changes AS (
     SELECT
