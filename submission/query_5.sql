@@ -18,3 +18,4 @@ WHERE
     grouping_category = 'team_only' -- selects category by teams only
 ORDER BY
     total_games_won DESC
+LIMIT 1
