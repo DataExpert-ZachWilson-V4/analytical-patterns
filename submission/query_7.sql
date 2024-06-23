@@ -1,5 +1,5 @@
 -- Query that gets the max consecutive times Lebron James scored 10 pts
-WITH 
+WITH  
 player_games AS (
     SELECT
         player_name,

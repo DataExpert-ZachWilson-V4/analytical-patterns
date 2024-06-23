@@ -40,4 +40,4 @@ SELECT
 FROM
     state_changes
 ORDER BY
-    player_name, start_season
+    player_name, start_season 
