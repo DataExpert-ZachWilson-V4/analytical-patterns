@@ -15,7 +15,7 @@ player_games AS (
 ),
 lagged_games AS (
     SELECT *,
-        LAG(over_ten_pts, 1) OVER (PARTITION BY player_name ORDER BY game_date_est) AS prev_over_ten_pts  -- Use LAG to get the previous game's 'over_ten_pts' for comparison
+        LAG(over_ten_pts, 1) OVER (PARTITION BY player_name ORDER BY game_date_est) AS prev_over_ten_pts  -- Use LAG to get the previous games over_ten_pts for comparison
     FROM
         player_games
     WHERE
@@ -23,7 +23,7 @@ lagged_games AS (
 ),
 streaks AS (
     SELECT *,
-        SUM(CASE WHEN over_ten_pts = 0 THEN 1 ELSE 0 END) OVER (PARTITION BY player_name ORDER BY game_date_est) AS streak_id  --  Create streak_id that increments when 'over_ten_pts' is 0, resetting the streak
+        SUM(CASE WHEN over_ten_pts = 0 THEN 1 ELSE 0 END) OVER (PARTITION BY player_name ORDER BY game_date_est) AS streak_id  --  Create streak_id that increments when over_ten_pts is 0, resetting the streak
     FROM
         lagged_games
 ),
