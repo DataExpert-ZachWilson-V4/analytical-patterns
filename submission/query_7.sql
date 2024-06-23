@@ -14,25 +14,22 @@ player_games AS (
         player_name = 'LeBron James'
 ),
 lagged_games AS (
-    -- Use LAG to get the previous game's 'over_ten_pts' for comparison
     SELECT *,
-        LAG(over_ten_pts, 1) OVER (PARTITION BY player_name ORDER BY game_date_est) AS prev_over_ten_pts
+        LAG(over_ten_pts, 1) OVER (PARTITION BY player_name ORDER BY game_date_est) AS prev_over_ten_pts  -- Use LAG to get the previous game's 'over_ten_pts' for comparison
     FROM
         player_games
     WHERE
         game_num = 1 -- filter to include only unique games
 ),
 streaks AS (
-    --  Create streak_id that increments when 'over_ten_pts' is 0, resetting the streak
     SELECT *,
-        SUM(CASE WHEN over_ten_pts = 0 THEN 1 ELSE 0 END) OVER (PARTITION BY player_name ORDER BY game_date_est) AS streak_id
+        SUM(CASE WHEN over_ten_pts = 0 THEN 1 ELSE 0 END) OVER (PARTITION BY player_name ORDER BY game_date_est) AS streak_id  --  Create streak_id that increments when 'over_ten_pts' is 0, resetting the streak
     FROM
         lagged_games
 ),
 consecutive_games AS (
-    -- Calculate running count of consecutive games within each streak_id where 'over_ten_pts' is 1
     SELECT *,
-        ROW_NUMBER() OVER (PARTITION BY player_name, streak_id ORDER BY game_date_est) AS running_consecutive_games
+        ROW_NUMBER() OVER (PARTITION BY player_name, streak_id ORDER BY game_date_est) AS running_consecutive_games  -- Calculate running count of consecutive games within each streak_id 
     FROM
         streaks
     WHERE
