@@ -16,7 +16,6 @@ win_stretches AS (
     SELECT
         team_abbreviation,
         game_date_est,
-        game_num,
         SUM(CAST(team_won AS INTEGER)) OVER (
             PARTITION BY team_abbreviation
             ORDER BY
