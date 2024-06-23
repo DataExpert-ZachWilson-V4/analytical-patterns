@@ -9,7 +9,7 @@ WITH player_status AS (
         LAG(is_active) OVER (PARTITION BY player_name ORDER BY start_season) AS prev_is_active, --uses lag to get the previous is active record
         LAG(end_season) OVER (PARTITION BY player_name ORDER BY start_season) AS prev_end_season --uses lag to get the previous start season
     FROM
-        bootcamp.nba_players_scd
+        amaliah21315.nba_player_scd
 ),
 state_changes AS (
     SELECT
