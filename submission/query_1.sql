@@ -1,4 +1,5 @@
 -- Query that categorizes players state changes from our slowly changing dimension table created in previous session
+INSERT INTO amaliah21315.nba_player_state_track2
 WITH player_status AS (
     SELECT
         player_name,
