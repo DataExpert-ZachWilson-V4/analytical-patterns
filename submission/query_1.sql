@@ -26,7 +26,7 @@ state_changes AS (
             WHEN prev_is_active = false AND is_active = true THEN 'Returned from Retirement'
             WHEN prev_is_active = true AND is_active = true THEN 'Continued Playing'
             WHEN prev_is_active = false AND is_active = false THEN 'Stayed Retired'
-            WHEN prev_is_active IS NULL AND is_active  IS NULL THEN 'Never Played'
+            WHEN prev_is_active IS NULL AND is_active  IS NULL THEN 'Never Played' -- added in the event the player has never been active
             ELSE 'Unknown'
         END AS state_change --based on the results of the lag categorize the state change of the user at each slowly changing dimension
     FROM
