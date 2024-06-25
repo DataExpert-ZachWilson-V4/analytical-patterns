@@ -11,4 +11,3 @@ from shabab.nba_grouping_sets where aggregation_level = 'team'
 group by team_abbreviation
 order by max_wins desc
 limit 1
-

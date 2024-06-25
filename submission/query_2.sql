@@ -4,8 +4,7 @@
 --   - player and season
 --   - team
 -- Note: credit to jc taking me in a different direction here;
--- i would not have seen those grouping sets to make the aggregated table more comprehensive
--- TODO: extend this lesson after bootcamp
+-- these grouping sets make the aggregated table more comprehensive
 
 -- create or replace table shabab.nba_grouping_sets (
 --     aggregation_level   varchar,

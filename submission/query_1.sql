@@ -6,6 +6,9 @@
 --   - A player that comes out of retirement should be `Returned from Retirement`
 --   - A player that stays out of the league should be `Stayed Retired`
 
+-- see below commented out code for -
+-- creating a cumulative table for tracking users state across nba seasons (growth accounting table)
+--
 -- create or replace table shabab.nba_players_track(
 --     player_name varchar,
 --     college varchar,
@@ -21,6 +24,8 @@
 -- ) with (
 --     format = 'PARQUET', partitioning = ARRAY['current_season']
 -- )
+
+-- see below for a single iteration of incremental growth accounting table insertion
 
 -- insert into shabab.nba_players_track
 with
@@ -65,6 +70,8 @@ select
     COALESCE(ls.draft_number, ts.draft_number) as draft_number,
 
     -- seasons array
+    -- Note: concatenation orders the most prev season (including year) at index 1,
+    --       makes fetch (to track state_change) an easy O(1) operation
     case
         when ts.season is not NULL
             then array[row(ts.season, ts.age, ts.weight, ts.gp, ts.pts, ts.reb, ts.ast)] || COALESCE(ls.seasons, array[])
@@ -89,6 +96,7 @@ select
     -- player's state change
     case
         -- no prev records; appear in this current year
+        -- note: the first time the query is run; all tuples (rows) will be 'new'
         when ts.season is not NULL and ls.seasons is NULL
             then 'new'
         -- has prev year record; but does not appear this current year
